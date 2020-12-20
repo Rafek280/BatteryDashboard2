@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="color1" format="color" />
+    <attr name="color2" format="color"/>
+
+    <declare-styleable name="BatteryGraphicView">
+        <attr name="color1"/>
+        <attr name="color2"/>
+    </declare-styleable>
+    <declare-styleable name="RoundGaugeGraphicView">
+        <attr name="color1"/>
+        <attr name="color2"/>
+        <attr name="needleColor" format="color"/>
+    </declare-styleable>
+</resources>

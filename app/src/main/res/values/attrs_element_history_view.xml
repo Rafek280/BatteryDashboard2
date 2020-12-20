@@ -1,0 +1,7 @@
+<resources>
+    <declare-styleable name="ElementHistoryView">
+        <attr name="name" format="string" />
+        <attr name="graphcolor" format="color" />
+        <attr name="icon" format="reference" />
+    </declare-styleable>
+</resources>

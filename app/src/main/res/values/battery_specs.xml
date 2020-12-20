@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--This file contains values based on the hardware battery setup and
+    the protocol used for communication between the hardware (Arduino)
+    and the StatReceiver.
+    (The same protocol is used with the RandomReceiver but with mocked values.)
+-->
+
+<resources>
+    <!-- battery model -->
+    <integer name="cellsPerBlock">15</integer>
+    <integer name="maxAHPerCell">100</integer> <!-- TODO implement -->
+    <integer name="blocks">4</integer>
+    <integer name="max_data_age">100</integer><!-- values older than this will be ignored in UI -->
+    <integer name="thermometer_per_block">5</integer>
+    <integer name="cellsPerThermometer">3</integer> <!-- each thermometer is covering 3 cells -->
+
+    <!-- safety threshold values to display warnings -->
+    <!-- If values go above or below the following settings (+- warningThreshold), the UI should display some kind of warning marker.
+        Example:
+            values max=100, min=50, warningThreshold=10
+            causes warnings at values above 90 and below 55 (40??)
+        TODO the following are still values for debugging. Need to be properly set
+    -->
+    <integer name="warningThreshold">3</integer> <!-- in percent -->
+
+    <fraction name="maxCellVoltage">3.7</fraction>
+    <fraction name="minCellVoltage">2.7</fraction>
+    <fraction name="maxCellTemperature">60</fraction>
+    <fraction name="minCellTemperature">0</fraction>
+
+    <fraction name="maxChargerTemperature">60</fraction>
+    <fraction name="minChargerTemperature">0</fraction>
+    <fraction name="maxChargerAmperage">14</fraction>
+    <fraction name="minChargerAmperage">0</fraction>
+
+    <fraction name="maxCapacityTemperature">60</fraction>
+    <fraction name="minCapacityTemperature">0</fraction>
+
+    <fraction name="maxCapacity">100</fraction>
+    <fraction name="minCapacity">5</fraction>
+</resources>

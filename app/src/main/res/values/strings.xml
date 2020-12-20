@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">BatteryDashboard</string>
+    <string name="date_format">dd.MM.yyyy</string>
+    <string name="time_format">hh:mm:ss</string>
+
+    // for statistics
+    <string name="statistics_energy_consumption">Verbrauch [A]</string>
+    <string name="statistics_reach">Reichweite [km]</string>
+    <string name="statistics_driven">Zurückgelegt [km]</string>
+    <string name="show_details"><![CDATA[<< show Details]]></string>
+    <string name="hide_details">hide details</string>
+    <string name="temperatures">temperatures</string>
+    <string name="charges">charges</string>
+    <string name="display_of_the_extimated_remaining_power">display of the extimated remaining power</string>
+    <string name="deselect_all">Deselect All</string>
+    <string name="update">Update</string>
+</resources>
