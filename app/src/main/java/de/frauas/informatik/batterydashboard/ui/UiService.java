@@ -216,6 +216,9 @@ public class UiService extends Service implements PopupMenu.OnMenuItemClickListe
             case VOLTAGE:
                 gauge.update(battery.voltageSum());
                 break;
+            case GESCHWINDIGKEIT:
+                gauge.update(battery.voltageSum());
+                break;
             case POWER:
                 gauge.update(battery.power());
                 break;

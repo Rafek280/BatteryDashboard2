@@ -10,6 +10,7 @@ package de.frauas.informatik.batterydashboard.enums;
 
 public enum GaugeMetric {
     VOLTAGE ("Spannung","V", 0, 250),
+    GESCHWINDIGKEIT ("Geschwindigkeit","KM/H", 0, 400),
     POWER("Leistung","kW", -10, 30),
     DRIVING_AMP("Driving Amperage","A", -50,150),
     CHARGER_TEMP("Charger-Temp","°C"),

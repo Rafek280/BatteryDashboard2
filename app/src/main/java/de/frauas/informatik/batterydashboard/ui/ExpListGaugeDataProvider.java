@@ -25,6 +25,12 @@ class ExpListGaugeDataProvider {
         voltage.add(new GaugeBlueprint(GaugeMetric.VOLTAGE, GaugeType.BIG_NUMBER));
         voltage.add(new GaugeBlueprint(GaugeMetric.VOLTAGE, GaugeType.GRAPHICAL));
 
+        List<GaugeBlueprint> geschwindigkeit = new ArrayList<>();
+        geschwindigkeit.add(new GaugeBlueprint(GaugeMetric.GESCHWINDIGKEIT, GaugeType.TEXT_ONLY));
+        geschwindigkeit.add(new GaugeBlueprint(GaugeMetric.GESCHWINDIGKEIT, GaugeType.BIG_NUMBER));
+        geschwindigkeit.add(new GaugeBlueprint(GaugeMetric.GESCHWINDIGKEIT, GaugeType.GRAPHICAL));
+
+
         List<GaugeBlueprint> drivingAmp = new ArrayList<>();
         drivingAmp.add(new GaugeBlueprint(GaugeMetric.DRIVING_AMP, GaugeType.TEXT_ONLY));
         drivingAmp.add(new GaugeBlueprint(GaugeMetric.DRIVING_AMP, GaugeType.BIG_NUMBER));
@@ -62,7 +68,7 @@ class ExpListGaugeDataProvider {
              - uncomment the appropriate section here or follow the example of the Lists above.
              - if you created a graphical gauge add this option to the section :)
              - put the list you created to expandableListDetail with appropriate title -> see end of this class ;)
-
+-*/
         List<GaugeBlueprint> range = new ArrayList<>(); // = reichweite
         range.add(new GaugeBlueprint(GaugeMetric.RANGE, GaugeType.TEXT_ONLY));
         range.add(new GaugeBlueprint(GaugeMetric.RANGE, GaugeType.BIG_NUMBER));
@@ -74,9 +80,10 @@ class ExpListGaugeDataProvider {
         List<GaugeBlueprint> consumption = new ArrayList<>(); // = verbrauch
         consumption.add(new GaugeBlueprint(GaugeMetric.CONSUMPTION, GaugeType.TEXT_ONLY));
         consumption.add(new GaugeBlueprint(GaugeMetric.CONSUMPTION, GaugeType.BIG_NUMBER));
-         */
+
 
         expandableListDetail.put("Spannung", voltage);
+        expandableListDetail.put("Geschwindigkeit", geschwindigkeit);
         expandableListDetail.put("Driving Amperage", drivingAmp);
         expandableListDetail.put("Leistung", power);
         expandableListDetail.put("Charger-Temperatur", accuTemp);

@@ -41,6 +41,7 @@ class GaugeBlueprint {
 
             if(posX!=0) {
                 this.posX = posX;
+
             }
             if(posY!=0) {
                  this.posY = posY;
