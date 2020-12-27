@@ -219,8 +219,14 @@ public class UiService extends Service implements PopupMenu.OnMenuItemClickListe
             case GESCHWINDIGKEIT:
                 gauge.update(battery.voltageSum());
                 break;
+            case TAGES_KILOMETER_ZAEHLER:
+                gauge.update(battery.voltageSum());
+                break;
             case POWER:
                 gauge.update(battery.power());
+                break;
+            case DURCHSCHNITTSGESCHWINDIGKEIT:
+                gauge.update(battery.voltageSum());
                 break;
             case DRIVING_AMP:
                 gauge.update(battery.drivingAmperage());
@@ -392,7 +398,7 @@ public class UiService extends Service implements PopupMenu.OnMenuItemClickListe
                 popupExitMenu.dismiss();
                 return true;
             case R.id.menu_load:
-
+                gaugeManager.testDelete(this);
                 gaugeManager.testLoadConfig();
                 gaugeManager.instantiateConfigBlueprints(this);
                 gaugeManager.updateUI(this);

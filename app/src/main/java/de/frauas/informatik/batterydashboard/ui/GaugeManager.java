@@ -144,9 +144,12 @@ public class GaugeManager {
         getActiveGauges();
         for(Gauge g : activeGauges){
             GaugeBlueprint b = g.getBlueprint();
-
+            b.setX(g.getX());
+            b.setY(g.getY());
             blueprints.add(b);
         }
+
+
 
         System.out.println(blueprints);
         System.out.println(activeGauges);

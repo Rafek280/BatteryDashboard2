@@ -26,6 +26,9 @@ class GaugeBlueprint {
     float posY=0;
 
 
+
+
+
     GaugeBlueprint(GaugeMetric gaugeMetric, GaugeType gaugeType){
         this.gaugeMetric = gaugeMetric;
         this.gaugeType = gaugeType;
@@ -54,14 +57,6 @@ class GaugeBlueprint {
 
     public void setY(float posY) {
         this.posY = posY;
-    }
-
-    public float getPosX() {
-        return posX;
-    }
-
-    public float getPosY() {
-        return posY;
     }
 
 

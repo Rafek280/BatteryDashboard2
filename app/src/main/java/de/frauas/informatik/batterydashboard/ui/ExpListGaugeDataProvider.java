@@ -30,11 +30,25 @@ class ExpListGaugeDataProvider {
         geschwindigkeit.add(new GaugeBlueprint(GaugeMetric.GESCHWINDIGKEIT, GaugeType.BIG_NUMBER));
         geschwindigkeit.add(new GaugeBlueprint(GaugeMetric.GESCHWINDIGKEIT, GaugeType.GRAPHICAL));
 
+        List<GaugeBlueprint> fahrtenStatisten = new ArrayList<>();
+        fahrtenStatisten.add(new GaugeBlueprint(GaugeMetric.DURCHSCHNITTSGESCHWINDIGKEIT, GaugeType.BIG_NUMBER));
+        fahrtenStatisten.add(new GaugeBlueprint(GaugeMetric.DURCHSCHNITTSGESCHWINDIGKEIT, GaugeType.GRAPHICAL));
+        fahrtenStatisten.add(new GaugeBlueprint(GaugeMetric.DURCHSCHNITTSVERBRAUCH, GaugeType.BIG_NUMBER));
+        fahrtenStatisten.add(new GaugeBlueprint(GaugeMetric.DURCHSCHNITTSVERBRAUCH  , GaugeType.GRAPHICAL));
 
         List<GaugeBlueprint> drivingAmp = new ArrayList<>();
         drivingAmp.add(new GaugeBlueprint(GaugeMetric.DRIVING_AMP, GaugeType.TEXT_ONLY));
         drivingAmp.add(new GaugeBlueprint(GaugeMetric.DRIVING_AMP, GaugeType.BIG_NUMBER));
         drivingAmp.add(new GaugeBlueprint(GaugeMetric.DRIVING_AMP, GaugeType.GRAPHICAL));
+
+        List<GaugeBlueprint> tagesKilometerzaehler= new ArrayList<>();
+        tagesKilometerzaehler.add(new GaugeBlueprint(GaugeMetric.TAGES_KILOMETER_ZAEHLER, GaugeType.TEXT_ONLY));
+        tagesKilometerzaehler.add(new GaugeBlueprint(GaugeMetric.TAGES_KILOMETER_ZAEHLER, GaugeType.BIG_NUMBER));
+
+
+        List<GaugeBlueprint> aktuellerVerbrauch= new ArrayList<>();
+        aktuellerVerbrauch.add(new GaugeBlueprint(GaugeMetric.CONSUMPTION, GaugeType.BIG_NUMBER));
+
 
         List<GaugeBlueprint> power = new ArrayList<>();
         power.add(new GaugeBlueprint(GaugeMetric.POWER, GaugeType.TEXT_ONLY));
@@ -77,18 +91,16 @@ class ExpListGaugeDataProvider {
         odometer.add(new GaugeBlueprint(GaugeMetric.ODOMETER, GaugeType.TEXT_ONLY));
         odometer.add(new GaugeBlueprint(GaugeMetric.ODOMETER, GaugeType.BIG_NUMBER));
 
-        List<GaugeBlueprint> consumption = new ArrayList<>(); // = verbrauch
-        consumption.add(new GaugeBlueprint(GaugeMetric.CONSUMPTION, GaugeType.TEXT_ONLY));
-        consumption.add(new GaugeBlueprint(GaugeMetric.CONSUMPTION, GaugeType.BIG_NUMBER));
-
-
+        expandableListDetail.put("Fahrten Statisten", fahrtenStatisten);
         expandableListDetail.put("Spannung", voltage);
         expandableListDetail.put("Geschwindigkeit", geschwindigkeit);
         expandableListDetail.put("Driving Amperage", drivingAmp);
+        expandableListDetail.put("Verbrauch", aktuellerVerbrauch);
         expandableListDetail.put("Leistung", power);
         expandableListDetail.put("Charger-Temperatur", accuTemp);
         expandableListDetail.put("Kapazität", capacity);
         expandableListDetail.put("Zellspannungen", cellvoltages);
+        expandableListDetail.put("Tages kilometer zaehler", tagesKilometerzaehler);
         expandableListDetail.put(celltemps.get(0).gaugeMetric.label, celltemps);
 
         return expandableListDetail;

@@ -122,12 +122,16 @@ public class Gauge extends ConstraintLayout {
             // TODO implement and add code for more graphical gauges...
             switch (gaugeMetric) {
                 case CAPACITY:
+                case CONSUMPTION:
                     // use battery gauge
                     content = (ViewGroup) inflater.inflate(R.layout.graphical_battery_gauge, this);
                     graphicView = content.findViewWithTag("graphicView");
                     break;
                 case POWER:
                 case VOLTAGE:
+                case GESCHWINDIGKEIT:
+                case DURCHSCHNITTSGESCHWINDIGKEIT:
+                case  TAGES_KILOMETER_ZAEHLER:
                 case DRIVING_AMP:
                     // use round gauge
                     content = (ViewGroup) inflater.inflate(R.layout.graphical_round_gauge, this);
