@@ -91,7 +91,7 @@ class ExpListGaugeDataProvider {
         odometer.add(new GaugeBlueprint(GaugeMetric.ODOMETER, GaugeType.TEXT_ONLY));
         odometer.add(new GaugeBlueprint(GaugeMetric.ODOMETER, GaugeType.BIG_NUMBER));
 
-        expandableListDetail.put("Fahrten Statisten", fahrtenStatisten);
+        expandableListDetail.put("Fahrten Statistiken", fahrtenStatisten);
         expandableListDetail.put("Spannung", voltage);
         expandableListDetail.put("Geschwindigkeit", geschwindigkeit);
         expandableListDetail.put("Driving Amperage", drivingAmp);

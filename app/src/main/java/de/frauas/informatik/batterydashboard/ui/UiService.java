@@ -21,6 +21,7 @@ import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
@@ -76,7 +77,7 @@ public class UiService extends Service implements PopupMenu.OnMenuItemClickListe
     int uiUpdateFrequency = 1000; // 2000 = every 2 seconds, 1000 = every second
     private PopupMenu popupExitMenu;
 
-
+    private TextView Titel;
     private PopupMenu popupProfileMenu;
 
 
@@ -218,6 +219,7 @@ public class UiService extends Service implements PopupMenu.OnMenuItemClickListe
                 break;
             case GESCHWINDIGKEIT:
                 gauge.update(battery.voltageSum());
+                gauge.update(battery.voltageSum());
                 break;
             case TAGES_KILOMETER_ZAEHLER:
                 gauge.update(battery.voltageSum());
@@ -242,6 +244,10 @@ public class UiService extends Service implements PopupMenu.OnMenuItemClickListe
                 /* TODO implement in battery: Durchschnittsverbrauch
                  (aus der Leistung berechnet, seit Fahrzeugstart (Zündung an),
                  Werte jede Sekunde aufaddieren, dann durch Zeit teilen) */
+                gauge.update(battery.voltageSum());
+                break;
+            case DURCHSCHNITTSVERBRAUCH:
+                gauge.update(battery.voltageSum());
                 break;
             case RANGE:
                 /* TODO implement in battery: Reichweite
@@ -407,6 +413,16 @@ public class UiService extends Service implements PopupMenu.OnMenuItemClickListe
             case R.id.menu_save:
                 gaugeManager.saveDashConfig();
                 return true;
+
+            case R.id.menu_statistiken:
+                gaugeManager.testDelete(this);
+                gaugeManager.loadText();
+                gaugeManager.LoadStatistiken();
+                gaugeManager.instantiateConfigBlueprints(this);
+                gaugeManager.updateUI(this);
+
+                return true;
+
             case R.id.menu_clear:
                 gaugeManager.testDelete(this);
 
@@ -416,5 +432,7 @@ public class UiService extends Service implements PopupMenu.OnMenuItemClickListe
                 return false;
         }
     }
+
+
 
 }

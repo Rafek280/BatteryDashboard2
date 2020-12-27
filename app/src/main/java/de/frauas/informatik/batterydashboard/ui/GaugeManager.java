@@ -79,10 +79,8 @@ public class GaugeManager {
         currentConfig = saveConfig(testConfig);
         //getActiveGauges();
         //getCurrentBlueprints();
-        getConfigDescriptions();
-        getActiveGaugeDescriptions();
-        System.out.println("NUEEEEEEEEEEEEEEEEEEEEDKIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIING");
-        System.out.println(activeGauges);
+        //getConfigDescriptions();
+        //getActiveGaugeDescriptions();
     }
 
 
@@ -101,8 +99,26 @@ public class GaugeManager {
 
     }
 
-    public void testDelete(Context context){
+    public void loadText(){
 
+
+    }
+
+    public void LoadStatistiken() {
+
+        ArrayList<GaugeBlueprint> gauges2 = new ArrayList<>();
+
+        gauges2.add(new GaugeBlueprint(GaugeMetric.DURCHSCHNITTSGESCHWINDIGKEIT, GaugeType.GRAPHICAL, 20, 60));
+        gauges2.add(new GaugeBlueprint(GaugeMetric.DURCHSCHNITTSVERBRAUCH, GaugeType.BIG_NUMBER, 180, 60));
+
+        DashboardConfiguration testConfig = new DashboardConfiguration(gauges2, "default2", true);
+
+        currentConfig = saveConfig(testConfig);
+        updateCurrentConfig(getConfig("default2"));
+
+    }
+
+    public void testDelete(Context context){
 
         activeGauges.clear();
         // save current positions (could have been changed)

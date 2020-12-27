@@ -8,6 +8,9 @@
         android:id="@+id/menu_save"
         android:title="Save" />
     <item
+        android:id="@+id/menu_statistiken"
+        android:title="Statistiken" />
+    <item
         android:id="@+id/menu_clear"
         android:icon="@drawable/ic_x"
         android:title="Clear" />
