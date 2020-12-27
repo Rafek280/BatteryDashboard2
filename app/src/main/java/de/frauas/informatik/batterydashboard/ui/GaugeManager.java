@@ -144,6 +144,12 @@ public class GaugeManager {
         getActiveGauges();
         for(Gauge g : activeGauges){
             GaugeBlueprint b = g.getBlueprint();
+            /** saving Coordinates doesnt work with getBP...
+             * we set the coordinates oursefl with setters, position saving works.
+             */
+            b.setX(g.getX());
+            b.setY(g.getY());
+
 
             blueprints.add(b);
         }
@@ -167,9 +173,9 @@ public class GaugeManager {
     public void saveDashConfig(){
 
 
-        ArrayList<GaugeBlueprint> gauges = new ArrayList<>();
+        ArrayList<GaugeBlueprint> gauges;
 
-        gauges= getCurrentBlueprints();
+        gauges = getCurrentBlueprints();
 
 
         DashboardConfiguration testConfig1 = new DashboardConfiguration(gauges, "rafek", true);

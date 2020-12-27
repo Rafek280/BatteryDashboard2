@@ -21,8 +21,9 @@ import de.frauas.informatik.batterydashboard.enums.GaugeType;
 class GaugeBlueprint {
     GaugeMetric gaugeMetric;
     GaugeType gaugeType;
-    float posX=100;
-    float posY=100;
+    float posX=0;
+
+    float posY=0;
 
 
     GaugeBlueprint(GaugeMetric gaugeMetric, GaugeType gaugeType){
@@ -44,6 +45,14 @@ class GaugeBlueprint {
             if(posY!=0) {
                  this.posY = posY;
             }
+    }
+
+    public void setX(float posX) {
+        this.posX = posX;
+    }
+
+    public void setY(float posY) {
+        this.posY = posY;
     }
 
     public float getPosX() {
