@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         TextView title = (TextView) findViewById(R.id.superText);
 
         button1= findViewById(R.id.menu_statistiken);
-        button1.setOnClickListener(new View.OnClickListener() {
+      /*  button1.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
+*/
         // if you are running this on a new device, just keep allowing and restart the app until it works.
         if(!Settings.canDrawOverlays(this)){
             // ask for setting
