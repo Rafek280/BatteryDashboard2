@@ -22,7 +22,6 @@ import android.widget.ExpandableListView;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
 import android.widget.TextView;
-
 import androidx.annotation.Nullable;
 
 import com.example.batterydashboard.R;
@@ -31,7 +30,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import de.frauas.informatik.batterydashboard.models.Battery;
 import de.frauas.informatik.batterydashboard.background.BatteryDataService;
 import de.frauas.informatik.batterydashboard.enums.GaugeType;
 
@@ -70,14 +68,13 @@ public class UiService extends Service implements PopupMenu.OnMenuItemClickListe
     private GaugeManager gaugeManager;
     private BatteryDataService dataService;
     private boolean isDataServiceBound = false;
-    de.frauas.informatik.batterydashboard.models.Battery battery;
+    Battery battery;
     private final Handler handler = new Handler();
     private WindowManager windowManager;
     private boolean IsInDeleteMode;
     int uiUpdateFrequency = 1000; // 2000 = every 2 seconds, 1000 = every second
     private PopupMenu popupExitMenu;
-
-    private TextView Titel;
+    private TextView title;
     private PopupMenu popupProfileMenu;
 
 
@@ -112,6 +109,7 @@ public class UiService extends Service implements PopupMenu.OnMenuItemClickListe
         // the battery object will be passed to the dataService and be shared by both services
         battery = new Battery(getResources());
         batteryDataServiceIntent = new Intent(this, BatteryDataService.class);
+
 
         // bind to data service
         bindService(batteryDataServiceIntent, serviceConnection, Context.BIND_AUTO_CREATE);
@@ -150,6 +148,8 @@ public class UiService extends Service implements PopupMenu.OnMenuItemClickListe
         this.setProfileButton(dashboard.getProfileButton());
         this.setDeleteModeButton(dashboard.getContent().findViewById(R.id.delete_btn)); // TESTING!
     }
+
+
 
     /**
      * loads the gauges of the given list to the dashboard, meaning it adds the views to the dashboard frame.
@@ -215,10 +215,6 @@ public class UiService extends Service implements PopupMenu.OnMenuItemClickListe
     private void updateGauge(Gauge gauge) {// Das ist nur für die Werte
         switch (gauge.gaugeMetric) {
             case VOLTAGE:
-                gauge.update(battery.voltageSum());
-                break;
-            case GESCHWINDIGKEIT:
-                gauge.update(battery.voltageSum());
                 gauge.update(battery.voltageSum());
                 break;
             case TAGES_KILOMETER_ZAEHLER:
@@ -400,39 +396,37 @@ public class UiService extends Service implements PopupMenu.OnMenuItemClickListe
             case R.id.menu_exit_app:
                 exitApp();
                 return true;
+
             case R.id.menu_cancel:
                 popupExitMenu.dismiss();
                 return true;
+
             case R.id.menu_load:
                 gaugeManager.testDelete(this);
                 gaugeManager.testLoadConfig();
                 gaugeManager.instantiateConfigBlueprints(this);
                 gaugeManager.updateUI(this);
-
                 return true;
+
             case R.id.menu_save:
                 gaugeManager.saveDashConfig();
                 return true;
 
             case R.id.menu_statistiken:
-                gaugeManager.testDelete(this);
-                gaugeManager.loadText();
+                //gaugeManager.testDelete(this);
+
                 gaugeManager.LoadStatistiken();
                 gaugeManager.instantiateConfigBlueprints(this);
                 gaugeManager.updateUI(this);
-
                 return true;
 
             case R.id.menu_clear:
                 gaugeManager.testDelete(this);
-
                 return true;
 
             default:
                 return false;
         }
     }
-
-
 
 }

@@ -1,4 +1,4 @@
-package de.frauas.informatik.batterydashboard.models;
+package de.frauas.informatik.batterydashboard.ui;
 
 import android.annotation.TargetApi;
 import android.content.res.Resources;

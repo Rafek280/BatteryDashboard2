@@ -21,16 +21,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+
         <TextView
             android:id="@+id/superText"
             android:layout_width="433dp"
             android:layout_height="387dp"
-            android:layout_x="25dp"
-            android:layout_y="67dp"
+            android:layout_x="-17dp"
+            android:layout_y="159dp"
             android:text="Statistiken letzte 100KM"
             android:textColor="@color/redAccent"
             android:textSize="18sp"
-            android:visibility="visible" />
+            android:visibility="invisible" />
     </AbsoluteLayout>
 
     <!-- Layout für die Menüleiste oben -->

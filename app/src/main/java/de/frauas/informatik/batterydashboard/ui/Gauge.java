@@ -178,6 +178,7 @@ public class Gauge extends ConstraintLayout {
         view.setOnTouchListener(new View.OnTouchListener() {
             @SuppressLint("ClickableViewAccessibility")
             @Override
+            //CHECKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK
             public boolean onTouch(View view, MotionEvent event) {
                 switch (event.getAction()) {
 

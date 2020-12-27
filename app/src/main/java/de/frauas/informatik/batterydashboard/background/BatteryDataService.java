@@ -6,6 +6,8 @@ import android.os.Binder;
 import android.os.IBinder;
 import android.util.Log;
 import androidx.annotation.WorkerThread;
+import de.frauas.informatik.batterydashboard.ui.Battery;
+
 import java.io.File;
 
 /**
@@ -21,7 +23,7 @@ import java.io.File;
  * @see de.frauas.informatik.batterydashboard.ui.UiService
  * @see RandomReceiver RandomReceiver (extends StatReceiver)
  * @see StatReceiver StatReceiver
- * @see de.frauas.informatik.batterydashboard.models.Battery
+ * @see Battery
  *
  * @author Lehmann (receiver connection etc.)
  * @author filzinge@stud.fra-uas.de
@@ -30,7 +32,7 @@ import java.io.File;
 
 public class BatteryDataService extends Service implements StatReceiver.OnNewDataListener {
     private static final String TAG = "BatteryDataService";
-    private de.frauas.informatik.batterydashboard.models.Battery battery;
+    private Battery battery;
     private final IBinder binder = new LocalBinder(); // Binder given to clients
     /**
      * set to true to have battery data printed readably to console (Logcat -> info) on every update!
@@ -103,7 +105,7 @@ public class BatteryDataService extends Service implements StatReceiver.OnNewDat
         StatReceiver.getInstance().stop();
     }
 
-    public void setBattery(de.frauas.informatik.batterydashboard.models.Battery battery) {
+    public void setBattery(Battery battery) {
         this.battery = battery;
     }
 }

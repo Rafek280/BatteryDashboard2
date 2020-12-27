@@ -101,7 +101,6 @@ public class GaugeManager {
 
     public void loadText(){
 
-
     }
 
     public void LoadStatistiken() {
