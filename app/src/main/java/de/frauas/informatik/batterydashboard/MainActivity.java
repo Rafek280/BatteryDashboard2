@@ -28,6 +28,7 @@ import static android.view.WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL;
 public class MainActivity extends AppCompatActivity {
     private TextView title;
     private Button button1;
+    private int test;
     private static final int REQUEST_OVERLAY_PERMISSION = 2;
     public static final int FLAG_NONBLOCKING_OVERLAY = FLAG_NOT_TOUCH_MODAL | FLAG_NOT_FOCUSABLE;
 

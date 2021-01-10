@@ -153,7 +153,7 @@ public class UiService extends Service implements PopupMenu.OnMenuItemClickListe
 
     public void openStatistiks(){
         WindowManager.LayoutParams params = new WindowManager.LayoutParams(
-                200,
+                419,
                 MATCH_PARENT, //  WRAP_CONTENT height
                 WindowManager.LayoutParams.TYPE_SYSTEM_ALERT,
                 FLAG_NONBLOCKING_OVERLAY,
@@ -166,7 +166,8 @@ public class UiService extends Service implements PopupMenu.OnMenuItemClickListe
         statdashboard = new StatistikDashboard(this);
         windowManager.addView(statdashboard, params);
         this.setExitButton(statdashboard.getExitButton());
-
+        gaugeManager = GaugeManager.getInstance();
+        loadDashboardConfigq(gaugeManager.instantiateConfigBlueprints(this));
 
     }
 
@@ -180,6 +181,15 @@ public class UiService extends Service implements PopupMenu.OnMenuItemClickListe
         }
     }
 
+    private void loadDashboardConfigq(ArrayList<Gauge> gauges){
+        for(Gauge g : gauges){
+            statdashboard.getDashboardFrame().addView(g);
+        }
+    }
+    private void updateDashboardConfigq(){
+        statdashboard.getDashboardFrame().removeAllViews();
+        loadDashboardConfig(gaugeManager.getActiveGauges());
+    }
     /**
      * updates the currently shown configuration by first removing all views and then adding the active gauges from the gaugeManager.</br>
      * This method is called whenever the gaugeManager requests a UI update because it made changes to its active gauges.
