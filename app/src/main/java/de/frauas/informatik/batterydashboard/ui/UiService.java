@@ -64,6 +64,7 @@ public class UiService extends Service implements PopupMenu.OnMenuItemClickListe
     public static final int FLAG_NONBLOCKING_OVERLAY = FLAG_NOT_TOUCH_MODAL | FLAG_NOT_FOCUSABLE;
     private Dashboard dashboard;
     private ConfigWindow configWindow;
+    private StatistikDashboard statdashboard;
     private boolean configWindowVisible = false;
     private GaugeManager gaugeManager;
     private BatteryDataService dataService;
@@ -150,6 +151,24 @@ public class UiService extends Service implements PopupMenu.OnMenuItemClickListe
     }
 
 
+    public void openStatistiks(){
+        WindowManager.LayoutParams params = new WindowManager.LayoutParams(
+                200,
+                MATCH_PARENT, //  WRAP_CONTENT height
+                WindowManager.LayoutParams.TYPE_SYSTEM_ALERT,
+                FLAG_NONBLOCKING_OVERLAY,
+                PixelFormat.TRANSLUCENT);
+        params.gravity = Gravity.CENTER | Gravity.TOP;
+
+        windowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
+
+
+        statdashboard = new StatistikDashboard(this);
+        windowManager.addView(statdashboard, params);
+        this.setExitButton(statdashboard.getExitButton());
+
+
+    }
 
     /**
      * loads the gauges of the given list to the dashboard, meaning it adds the views to the dashboard frame.
@@ -383,7 +402,49 @@ public class UiService extends Service implements PopupMenu.OnMenuItemClickListe
     // The overridden method from the implemented PopupMenu.OnMenuItemClickListener interface to assign functionality to
     // the close menu's itemswerfgwerge
 
+    private void setConfigTogglerForStatistiks(ImageButton btn) {
+        btn.setOnClickListener((l) -> {
+            if(!configWindowVisible) {
+                configWindowVisible = true;
 
+                // create the config window
+                WindowManager.LayoutParams params = new WindowManager.LayoutParams(
+                        600,
+                        MATCH_PARENT, //  WRAP_CONTENT height
+                        WindowManager.LayoutParams.TYPE_SYSTEM_ALERT,
+                        FLAG_NONBLOCKING_OVERLAY,
+                        PixelFormat.TRANSLUCENT);
+                params.gravity = Gravity.END | Gravity.TOP;
+
+                windowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
+                configWindow = new ConfigWindow(this);
+                windowManager.addView(configWindow, params);
+
+                // set up the expandable list
+                ViewGroup content = configWindow.getContent();
+                List<String> expandableListTitle;
+                ExpandableListView expandableListView = content.findViewById(R.id.expandableListView);
+                HashMap<String, List<GaugeBlueprint>> expandableListDetail = ExpListGaugeDataProvider.getAvailableGaugesData();
+                expandableListTitle = new ArrayList<>(expandableListDetail.keySet());
+                ExpandableListAdapter expandableListAdapter = new ExpListForGaugeBlueprintsAdapter(this, expandableListTitle, expandableListDetail);
+                expandableListView.setAdapter(expandableListAdapter);
+
+                // end DeleteMode if on
+                if(IsInDeleteMode){
+                    dashboard.getContent().findViewById(R.id.delete_btn).callOnClick();
+                }
+
+                // set up closing functionality
+                setConfigToggler(configWindow.getCloseBtn());
+                // the following causes the window to also close when clicking on the darkened dashboard
+                setConfigToggler(configWindow.getContent().findViewById(R.id.config_window_close_scrim));
+            }
+            else{
+                configWindowVisible = false;
+                windowManager.removeView(configWindow);
+            }
+        });
+    }
     public void loadSavedConfig(){
         //gaugeManager.testLoadConfig();
         updateDashboardConfig();
@@ -413,10 +474,7 @@ public class UiService extends Service implements PopupMenu.OnMenuItemClickListe
                 return true;
 
             case R.id.menu_statistiken:
-                gaugeManager.testDelete(this);
-                gaugeManager.LoadStatistiken();
-                gaugeManager.instantiateConfigBlueprints(this);
-                gaugeManager.updateUI(this);
+                openStatistiks();
                 return true;
 
             case R.id.menu_clear:

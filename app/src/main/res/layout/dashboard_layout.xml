@@ -12,30 +12,20 @@
     android:elevation="30dp">
 
     <!--Layout in dem die Elemente erscheinen sollen -->
-    <AbsoluteLayout
-        android:id="@+id/dashboardFrame"
-        android:layout_width="391dp"
-        android:layout_height="728dp"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-
-        <TextView
-            android:id="@+id/superText"
-            android:layout_width="433dp"
-            android:layout_height="387dp"
-            android:layout_x="-17dp"
-            android:layout_y="159dp"
-            android:text="Statistiken letzte 100KM"
-            android:textColor="@color/redAccent"
-            android:textSize="18sp"
-            android:visibility="invisible" />
-    </AbsoluteLayout>
 
     <!-- Layout für die Menüleiste oben -->
 
+
+    <AbsoluteLayout
+        android:id="@+id/dashboardFrame"
+        android:layout_width="412dp"
+        android:layout_height="756dp"
+        android:layout_marginStart="4dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
 
     <LinearLayout
 
