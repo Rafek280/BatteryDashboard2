@@ -172,7 +172,7 @@ public class UiService extends Service implements PopupMenu.OnMenuItemClickListe
 
     /**
      * loads the gauges of the given list to the dashboard, meaning it adds the views to the dashboard frame.
-     * @param gauges list of Gauge objects
+     * @param gauges list of Gauge objects lele
      */
     private void loadDashboardConfig(ArrayList<Gauge> gauges){
         for(Gauge g : gauges){
