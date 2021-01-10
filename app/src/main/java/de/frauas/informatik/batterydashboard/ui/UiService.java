@@ -381,7 +381,7 @@ public class UiService extends Service implements PopupMenu.OnMenuItemClickListe
     }
 
     // The overridden method from the implemented PopupMenu.OnMenuItemClickListener interface to assign functionality to
-    // the close menu's items
+    // the close menu's itemswerfgwerge
 
 
     public void loadSavedConfig(){
