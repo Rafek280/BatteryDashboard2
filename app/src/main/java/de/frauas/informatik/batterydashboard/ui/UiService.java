@@ -413,8 +413,7 @@ public class UiService extends Service implements PopupMenu.OnMenuItemClickListe
                 return true;
 
             case R.id.menu_statistiken:
-                //gaugeManager.testDelete(this);
-
+                gaugeManager.testDelete(this);
                 gaugeManager.LoadStatistiken();
                 gaugeManager.instantiateConfigBlueprints(this);
                 gaugeManager.updateUI(this);
