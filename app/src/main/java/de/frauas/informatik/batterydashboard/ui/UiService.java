@@ -75,6 +75,7 @@ public class UiService extends Service implements PopupMenu.OnMenuItemClickListe
     private boolean IsInDeleteMode;
     int uiUpdateFrequency = 1000; // 2000 = every 2 seconds, 1000 = every second
     private PopupMenu popupExitMenu;
+    private PopupMenu popupExitStatistiksMenu;
     private TextView title;
     private PopupMenu popupProfileMenu;
 
@@ -144,6 +145,7 @@ public class UiService extends Service implements PopupMenu.OnMenuItemClickListe
         loadDashboardConfig(gaugeManager.instantiateConfigBlueprints(this));
 
         // bind buttons etc
+
         this.setExitButton(dashboard.getExitButton());
         this.setConfigToggler(dashboard.getConfigButton());
         this.setProfileButton(dashboard.getProfileButton());
@@ -151,9 +153,9 @@ public class UiService extends Service implements PopupMenu.OnMenuItemClickListe
     }
 
 
-    public void openStatistiks(){
+    public void openStatistiksDashboard(){
         WindowManager.LayoutParams params = new WindowManager.LayoutParams(
-                419,
+                200,
                 MATCH_PARENT, //  WRAP_CONTENT height
                 WindowManager.LayoutParams.TYPE_SYSTEM_ALERT,
                 FLAG_NONBLOCKING_OVERLAY,
@@ -165,9 +167,8 @@ public class UiService extends Service implements PopupMenu.OnMenuItemClickListe
 
         statdashboard = new StatistikDashboard(this);
         windowManager.addView(statdashboard, params);
-        this.setExitButton(statdashboard.getExitButton());
-        gaugeManager = GaugeManager.getInstance();
-        loadDashboardConfigq(gaugeManager.instantiateConfigBlueprints(this));
+        this.setStatstiksMenu(statdashboard.getExitButton());
+
 
     }
 
@@ -181,15 +182,6 @@ public class UiService extends Service implements PopupMenu.OnMenuItemClickListe
         }
     }
 
-    private void loadDashboardConfigq(ArrayList<Gauge> gauges){
-        for(Gauge g : gauges){
-            statdashboard.getDashboardFrame().addView(g);
-        }
-    }
-    private void updateDashboardConfigq(){
-        statdashboard.getDashboardFrame().removeAllViews();
-        loadDashboardConfig(gaugeManager.getActiveGauges());
-    }
     /**
      * updates the currently shown configuration by first removing all views and then adding the active gauges from the gaugeManager.</br>
      * This method is called whenever the gaugeManager requests a UI update because it made changes to its active gauges.
@@ -312,6 +304,20 @@ public class UiService extends Service implements PopupMenu.OnMenuItemClickListe
         });
     }
 
+    /**
+     * statistiks button for closing the optional statstistiks dashboard
+     * @param btn
+     */
+    private void setStatstiksMenu(Button btn) {
+        btn.setOnClickListener((l) -> {
+            popupExitStatistiksMenu = new PopupMenu(this, btn);
+            popupExitStatistiksMenu.setOnMenuItemClickListener(this);
+            MenuInflater inflater = popupExitStatistiksMenu.getMenuInflater();
+            inflater.inflate(R.menu.statistiks_menu, popupExitStatistiksMenu.getMenu());
+            popupExitStatistiksMenu.show();
+        });
+    }
+
 
 
     /**
@@ -341,6 +347,12 @@ public class UiService extends Service implements PopupMenu.OnMenuItemClickListe
         this.stopSelf();
         System.exit(0);
     }
+    private void exitStatistiks(){
+        windowManager.removeView(statdashboard);
+
+
+    }
+
 
     /**
      * Makes the specified ImageButton the control that toggles the dashboard's deleteMode.
@@ -468,9 +480,15 @@ public class UiService extends Service implements PopupMenu.OnMenuItemClickListe
                 exitApp();
                 return true;
 
+            case R.id.menu_exit_statistiks:
+                exitStatistiks();
+                return true;
+
+
             case R.id.menu_cancel:
                 popupExitMenu.dismiss();
                 return true;
+
 
             case R.id.menu_load:
                 gaugeManager.testDelete(this);
@@ -484,7 +502,7 @@ public class UiService extends Service implements PopupMenu.OnMenuItemClickListe
                 return true;
 
             case R.id.menu_statistiken:
-                openStatistiks();
+                openStatistiksDashboard();
                 return true;
 
             case R.id.menu_clear:
