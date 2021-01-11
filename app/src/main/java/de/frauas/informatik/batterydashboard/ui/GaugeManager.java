@@ -107,7 +107,7 @@ public class GaugeManager {
 
         ArrayList<GaugeBlueprint> gauges2 = new ArrayList<>();
 
-        gauges2.add(new GaugeBlueprint(GaugeMetric.DURCHSCHNITTSGESCHWINDIGKEIT, GaugeType.GRAPHICAL, 200, 60));
+        gauges2.add(new GaugeBlueprint(GaugeMetric.DURCHSCHNITTSGESCHWINDIGKEIT, GaugeType.GRAPHICAL, 20, 60));
         gauges2.add(new GaugeBlueprint(GaugeMetric.DURCHSCHNITTSVERBRAUCH, GaugeType.BIG_NUMBER, 180, 60));
 
         DashboardConfiguration testConfig = new DashboardConfiguration(gauges2, "default2", true);

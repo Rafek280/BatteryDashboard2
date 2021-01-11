@@ -155,7 +155,7 @@ public class UiService extends Service implements PopupMenu.OnMenuItemClickListe
 
     public void openStatistiksDashboard(){
         WindowManager.LayoutParams params = new WindowManager.LayoutParams(
-                200,
+                419,
                 MATCH_PARENT, //  WRAP_CONTENT height
                 WindowManager.LayoutParams.TYPE_SYSTEM_ALERT,
                 FLAG_NONBLOCKING_OVERLAY,
@@ -503,6 +503,8 @@ public class UiService extends Service implements PopupMenu.OnMenuItemClickListe
 
             case R.id.menu_statistiken:
                 openStatistiksDashboard();
+                //gaugeManager.testDelete(this);
+                gaugeManager.LoadStatistiken();
                 return true;
 
             case R.id.menu_clear:
