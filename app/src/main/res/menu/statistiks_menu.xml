@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_exit_statistiks"
+        android:icon="@drawable/ic_exit"
+        android:iconTint="@color/redAccent"
+        android:title="Fenster schliesen" />
+    <item android:id="@+id/menu_cancel"
+        android:icon="@drawable/ic_x"
+        android:title="abbrechen" />
+</menu>

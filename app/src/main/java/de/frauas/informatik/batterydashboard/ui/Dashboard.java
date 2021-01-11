@@ -66,6 +66,7 @@ public class Dashboard extends ConstraintLayout implements IOverlay {
     Button getExitButton(){
         return content.findViewById(R.id.Exit);
     }
+
     ImageButton getConfigButton(){
         return content.findViewById(R.id.config_btn);
     }

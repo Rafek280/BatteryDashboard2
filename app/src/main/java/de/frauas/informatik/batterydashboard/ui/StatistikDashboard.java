@@ -60,7 +60,7 @@ public class StatistikDashboard extends ConstraintLayout implements IOverlay {
     }
 
     public AbsoluteLayout getDashboardFrame(){
-        return content.findViewById(R.id.dashboardFrame);
+        return content.findViewById(R.id.dashboardFrameStatistiks);
     }
 
     Button getExitButton(){
