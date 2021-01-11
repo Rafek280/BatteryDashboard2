@@ -8,6 +8,7 @@ import android.content.Context;
 //import com.facebook.stetho.Stetho;
 //import com.uphyca.stetho_realm.RealmInspectorModulesProvider;
 
+import de.frauas.informatik.batterydashboard.dataSync.Models.Credentials;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 
@@ -31,6 +32,11 @@ public class App extends Application {
                 //.encryptionKey(key)
                 .build();
         Realm.setDefaultConfiguration(config);
+        Credentials credentials = new Credentials();
+        credentials.setUsername("CarDevice");
+        credentials.setPassword("1234567890");
+        RestClient restClient = new RestClient();
+        restClient.setMyToken(App.this, credentials);
 
         //RealmConfiguration realmConfiguration = new RealmConfiguration.Builder()
         //        .deleteRealmIfMigrationNeeded()

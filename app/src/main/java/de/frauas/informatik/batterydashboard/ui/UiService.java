@@ -31,6 +31,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import de.frauas.informatik.batterydashboard.background.BatteryDataService;
+import de.frauas.informatik.batterydashboard.dataSync.RestClient;
 import de.frauas.informatik.batterydashboard.enums.GaugeType;
 
 
@@ -502,9 +503,10 @@ public class UiService extends Service implements PopupMenu.OnMenuItemClickListe
                 return true;
 
             case R.id.menu_statistiken:
-                openStatistiksDashboard();
+                /*openStatistiksDashboard();
                 //gaugeManager.testDelete(this);
-                gaugeManager.LoadStatistiken();
+                gaugeManager.LoadStatistiken();*/
+                RestClient restclient = new RestClient();
                 return true;
 
             case R.id.menu_clear:
