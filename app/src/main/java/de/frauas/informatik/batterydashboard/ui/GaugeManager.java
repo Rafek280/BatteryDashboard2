@@ -39,7 +39,6 @@ public class GaugeManager {
     private Hashtable<String, DashboardConfiguration> dashboardConfigs;
     private DashboardConfiguration currentConfig;
     private ArrayList<Gauge> activeGauges;
-    private ArrayList<Gauge> clone;
     static final String BROADCAST_ACTION = "requestConfigUpdate";
     private static Intent intent = new Intent(BROADCAST_ACTION);
     private boolean IsDeleteMode;
@@ -47,6 +46,12 @@ public class GaugeManager {
     // singleton implementation
     private static GaugeManager instance;
     static GaugeManager getInstance(){
+        if(instance == null){
+            instance = new GaugeManager();
+        }
+        return instance;
+    }
+    static GaugeManager getInstance2(){
         if(instance == null){
             instance = new GaugeManager();
         }
@@ -83,6 +88,27 @@ public class GaugeManager {
         //getActiveGaugeDescriptions();
     }
 
+    public void GaugeManagerforStatistik(){
+        dashboardConfigs = new Hashtable<>();
+        activeGauges = new ArrayList<>();
+        // TODO get dashboardConfigs from somewhere. xml?
+        saveDashConfig();
+        // making a default config here...
+        ArrayList<GaugeBlueprint> gauges = new ArrayList<>();
+
+        gauges.add(new GaugeBlueprint(GaugeMetric.POWER, GaugeType.GRAPHICAL, 20, 20));
+        gauges.add(new GaugeBlueprint(GaugeMetric.CAPACITY, GaugeType.GRAPHICAL, 180, 40));
+        gauges.add(new GaugeBlueprint(GaugeMetric.VOLTAGE, GaugeType.GRAPHICAL, 20, 160));
+        //gauges.add(new GaugeBlueprint(GaugeMetric.DRIVING_AMP, GaugeType.BIG_NUMBER, 180, 300));
+        gauges.add(new GaugeBlueprint(GaugeMetric.CELL_VOLTAGES, GaugeType.TEXT_ONLY, 20, 300));
+        gauges.add(new GaugeBlueprint(GaugeMetric.CELL_TEMPS, GaugeType.TEXT_ONLY, 170, 300));
+        gauges.add(new GaugeBlueprint(GaugeMetric.VOLTAGE, GaugeType.TEXT_ONLY, 20, 440));
+        gauges.add(new GaugeBlueprint(GaugeMetric.CHARGER_TEMP, GaugeType.BIG_NUMBER, 170, 140));
+
+        DashboardConfiguration testConfig = new DashboardConfiguration(gauges, "default", true);
+
+        currentConfig = saveConfig(testConfig);
+    }
 
         /**oooooooooooooooooooooooooooooooooooooo
      *
@@ -103,7 +129,7 @@ public class GaugeManager {
 
     }
 
-    public void LoadStatistiken() {
+    public void loadStatistiken() {
 
         ArrayList<GaugeBlueprint> gauges2 = new ArrayList<>();
 

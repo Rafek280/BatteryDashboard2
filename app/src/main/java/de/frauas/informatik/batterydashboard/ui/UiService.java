@@ -68,6 +68,7 @@ public class UiService extends Service implements PopupMenu.OnMenuItemClickListe
     private StatistikDashboard statdashboard;
     private boolean configWindowVisible = false;
     private GaugeManager gaugeManager;
+    private GaugeManager gaugeManager2;
     private BatteryDataService dataService;
     private boolean isDataServiceBound = false;
     Battery battery;
@@ -137,13 +138,19 @@ public class UiService extends Service implements PopupMenu.OnMenuItemClickListe
         params.gravity = Gravity.END | Gravity.TOP;
 
         windowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
+
         //assert windowManager != null;
         dashboard = new Dashboard(this);
         windowManager.addView(dashboard, params);
-
+        statdashboard= new StatistikDashboard(this);
         // get DashboardManager (Singleton) and load Gauges from Blueprints in a dashboard config
+        openStatistiksDashboard();
+
         gaugeManager = GaugeManager.getInstance();
-        loadDashboardConfig(gaugeManager.instantiateConfigBlueprints(this));
+        gaugeManager2 = GaugeManager.getInstance2();
+
+      //  loadDashboardConfig(gaugeManager.instantiateConfigBlueprints(this));
+        loadDashboardConfig2(gaugeManager2.instantiateConfigBlueprints(this));
 
         // bind buttons etc
 
@@ -178,8 +185,19 @@ public class UiService extends Service implements PopupMenu.OnMenuItemClickListe
      * @param gauges list of Gauge objects 
      */
     private void loadDashboardConfig(ArrayList<Gauge> gauges){
+
         for(Gauge g : gauges){
+
+
             dashboard.getDashboardFrame().addView(g);
+        }
+    }
+    private void loadDashboardConfig2(ArrayList<Gauge> gauges){
+
+        for(Gauge g : gauges){
+
+            statdashboard.getDashboardFrame().addView(g);
+
         }
     }
 
@@ -503,10 +521,10 @@ public class UiService extends Service implements PopupMenu.OnMenuItemClickListe
                 return true;
 
             case R.id.menu_statistiken:
-                /*openStatistiksDashboard();
+                openStatistiksDashboard();
                 //gaugeManager.testDelete(this);
-                gaugeManager.LoadStatistiken();*/
-                RestClient restclient = new RestClient();
+                gaugeManager.loadStatistiken();
+               // RestClient restclient = new RestClient();
                 return true;
 
             case R.id.menu_clear:

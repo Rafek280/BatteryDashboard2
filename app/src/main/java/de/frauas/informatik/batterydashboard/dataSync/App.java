@@ -36,12 +36,13 @@ public class App extends Application {
         credentials.setUsername("CarDevice");
         credentials.setPassword("1234567890");
         RestClient restClient = new RestClient();
+        restClient.handleSSLHandshake();
         restClient.setMyToken(App.this, credentials);
 
-        //RealmConfiguration realmConfiguration = new RealmConfiguration.Builder()
-        //        .deleteRealmIfMigrationNeeded()
-        //        .build();
-        //Realm.deleteRealm(realmConfiguration);
+        RealmConfiguration realmConfiguration = new RealmConfiguration.Builder()
+                .deleteRealmIfMigrationNeeded()
+                .build();
+        Realm.deleteRealm(realmConfiguration);
 
       /*  Stetho.initialize(
                 Stetho.newInitializerBuilder(this)
