@@ -65,9 +65,10 @@ public class UiService extends Service implements PopupMenu.OnMenuItemClickListe
     public static final int FLAG_NONBLOCKING_OVERLAY = FLAG_NOT_TOUCH_MODAL | FLAG_NOT_FOCUSABLE;
     private Dashboard dashboard;
     private ConfigWindow configWindow;
-    private StatistikDashboard statdashboard;
+
     private boolean configWindowVisible = false;
     private GaugeManager gaugeManager;
+
     private BatteryDataService dataService;
     private boolean isDataServiceBound = false;
     Battery battery;
@@ -76,11 +77,16 @@ public class UiService extends Service implements PopupMenu.OnMenuItemClickListe
     private boolean IsInDeleteMode;
     int uiUpdateFrequency = 1000; // 2000 = every 2 seconds, 1000 = every second
     private PopupMenu popupExitMenu;
-    private PopupMenu popupExitStatistiksMenu;
+
     private TextView title;
     private PopupMenu popupProfileMenu;
 
+    private boolean statsOn = false;
 
+    //statistiks
+    private PopupMenu popupExitStatistiksMenu;
+    private StatistikDashboard statdashboard;
+    private StatistiksGaugeManager gaugeManager_stats;
     /**
      * Defines callbacks for service binding, passed to bindService().
      */
@@ -154,7 +160,26 @@ public class UiService extends Service implements PopupMenu.OnMenuItemClickListe
     }
 
 
+    /**
+     * opens the statiss dashboard, displaying the custom gauges
+     * with several statistics recieved from bms etc...
+     */
     public void openStatistiksDashboard(){
+
+        // bind to data service
+        bindService(batteryDataServiceIntent, serviceConnection, Context.BIND_AUTO_CREATE);
+
+        // register a receiver to receive update requests from DashboardManager if config changed
+        BroadcastReceiver dashboardConfigUpdateReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                Log.d(TAG, "update request received.");
+                updateStatDashboardConfig();
+            }
+        };
+        registerReceiver(dashboardConfigUpdateReceiver, new IntentFilter(StatistiksGaugeManager.BROADCAST_ACTION));
+
+
         WindowManager.LayoutParams params = new WindowManager.LayoutParams(
                 419,
                 MATCH_PARENT, //  WRAP_CONTENT height
@@ -170,6 +195,9 @@ public class UiService extends Service implements PopupMenu.OnMenuItemClickListe
         windowManager.addView(statdashboard, params);
         this.setStatstiksMenu(statdashboard.getExitButton());
 
+        //load second manager for handling statistik gauges
+        gaugeManager_stats = StatistiksGaugeManager.getInstance();
+        loadStatDashboardConfig(gaugeManager_stats.instantiateConfigBlueprints(this));
 
     }
 
@@ -179,9 +207,23 @@ public class UiService extends Service implements PopupMenu.OnMenuItemClickListe
      */
     private void loadDashboardConfig(ArrayList<Gauge> gauges){
         for(Gauge g : gauges){
+            if(g.getParent() != null) {
+                ((ViewGroup)g.getParent()).removeView(g); // <- fix
+            }
             dashboard.getDashboardFrame().addView(g);
         }
     }
+
+    private void loadStatDashboardConfig(ArrayList<Gauge> gauges){
+        for(Gauge g : gauges){
+            if(g.getParent() != null) {
+                ((ViewGroup)g.getParent()).removeView(g); // <- fix
+            }
+            statdashboard.getDashboardFrame().addView(g);
+
+        }
+    }
+
 
     /**
      * updates the currently shown configuration by first removing all views and then adding the active gauges from the gaugeManager.</br>
@@ -190,6 +232,11 @@ public class UiService extends Service implements PopupMenu.OnMenuItemClickListe
     private void updateDashboardConfig(){
         dashboard.getDashboardFrame().removeAllViews();
         loadDashboardConfig(gaugeManager.getActiveGauges());
+    }
+
+    private void updateStatDashboardConfig(){
+        statdashboard.getDashboardFrame().removeAllViews();
+        loadStatDashboardConfig(gaugeManager_stats.getActiveGauges());
     }
 
     @Nullable
@@ -201,7 +248,9 @@ public class UiService extends Service implements PopupMenu.OnMenuItemClickListe
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         handler.removeCallbacks(dashboardValuesUpdate);
-        handler.postDelayed(dashboardValuesUpdate, 1000); // 1 second delay
+        handler.postDelayed(dashboardValuesUpdate, 1000);
+
+
 
         return START_NOT_STICKY;
         //return Service.START_REDELIVER_INTENT; //>> service will always be restarted
@@ -224,9 +273,18 @@ public class UiService extends Service implements PopupMenu.OnMenuItemClickListe
             for(Gauge g : gaugeManager.getActiveGauges()){
                 updateGauge(g);
             }
+            if(statsOn = true){
+                for(Gauge g : gaugeManager.getActiveGauges()){
+                    updateGauge(g);
+                }
+            }
+
+
+
             handler.postDelayed(this, uiUpdateFrequency);
         }
     };
+
 
 
     /**
@@ -348,9 +406,12 @@ public class UiService extends Service implements PopupMenu.OnMenuItemClickListe
         this.stopSelf();
         System.exit(0);
     }
+
+    /**
+     * closes the statisics dashboard
+     */
     private void exitStatistiks(){
         windowManager.removeView(statdashboard);
-
 
     }
 
@@ -483,11 +544,15 @@ public class UiService extends Service implements PopupMenu.OnMenuItemClickListe
 
             case R.id.menu_exit_statistiks:
                 exitStatistiks();
+                statsOn = false;
                 return true;
 
 
             case R.id.menu_cancel:
                 popupExitMenu.dismiss();
+                return true;
+            case R.id.menu_cancel_stats:
+                popupExitStatistiksMenu.dismiss();
                 return true;
 
 
@@ -503,10 +568,12 @@ public class UiService extends Service implements PopupMenu.OnMenuItemClickListe
                 return true;
 
             case R.id.menu_statistiken:
-                /*openStatistiksDashboard();
+
+                openStatistiksDashboard();
+                statsOn = true;
                 //gaugeManager.testDelete(this);
-                gaugeManager.LoadStatistiken();*/
-                RestClient restclient = new RestClient();
+
+               // RestClient restclient = new RestClient();
                 return true;
 
             case R.id.menu_clear:
