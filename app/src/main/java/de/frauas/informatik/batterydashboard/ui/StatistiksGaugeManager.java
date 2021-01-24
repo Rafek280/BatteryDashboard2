@@ -34,26 +34,21 @@ import de.frauas.informatik.batterydashboard.enums.GaugeType;
  * @author filzinge@stud.fra-uas.de
  */
 
-public class GaugeManager {
+public class StatistiksGaugeManager {
     private static final String TAG = "DashboardManager instance";
     private Hashtable<String, DashboardConfiguration> dashboardConfigs;
     private DashboardConfiguration currentConfig;
     private ArrayList<Gauge> activeGauges;
+    private ArrayList<Gauge> clone;
     static final String BROADCAST_ACTION = "requestConfigUpdate";
     private static Intent intent = new Intent(BROADCAST_ACTION);
     private boolean IsDeleteMode;
 
     // singleton implementation
-    private static GaugeManager instance;
-    static GaugeManager getInstance(){
+    private static StatistiksGaugeManager instance;
+    static StatistiksGaugeManager getInstance(){
         if(instance == null){
-            instance = new GaugeManager();
-        }
-        return instance;
-    }
-    static GaugeManager getInstance2(){
-        if(instance == null){
-            instance = new GaugeManager();
+            instance = new StatistiksGaugeManager();
         }
         return instance;
     }
@@ -62,7 +57,7 @@ public class GaugeManager {
         System.out.println("HaLLLWOWOOWOWOWOWOWOWOWOWOW");
     }
     // constructor
-    private GaugeManager(){
+    private StatistiksGaugeManager(){
         dashboardConfigs = new Hashtable<>();
         activeGauges = new ArrayList<>();
         // TODO get dashboardConfigs from somewhere. xml?
@@ -71,14 +66,9 @@ public class GaugeManager {
         ArrayList<GaugeBlueprint> gauges = new ArrayList<>();
 
 
-        gauges.add(new GaugeBlueprint(GaugeMetric.POWER, GaugeType.GRAPHICAL, 20, 20));
-        gauges.add(new GaugeBlueprint(GaugeMetric.CAPACITY, GaugeType.GRAPHICAL, 180, 40));
-        gauges.add(new GaugeBlueprint(GaugeMetric.VOLTAGE, GaugeType.GRAPHICAL, 20, 160));
-        //gauges.add(new GaugeBlueprint(GaugeMetric.DRIVING_AMP, GaugeType.BIG_NUMBER, 180, 300));
-        gauges.add(new GaugeBlueprint(GaugeMetric.CELL_VOLTAGES, GaugeType.TEXT_ONLY, 20, 300));
-        gauges.add(new GaugeBlueprint(GaugeMetric.CELL_TEMPS, GaugeType.TEXT_ONLY, 170, 300));
-        gauges.add(new GaugeBlueprint(GaugeMetric.VOLTAGE, GaugeType.TEXT_ONLY, 20, 440));
-        gauges.add(new GaugeBlueprint(GaugeMetric.CHARGER_TEMP, GaugeType.BIG_NUMBER, 170, 140));
+
+        gauges.add(new GaugeBlueprint(GaugeMetric.DURCHSCHNITTSGESCHWINDIGKEIT, GaugeType.GRAPHICAL, 20, 60));
+        gauges.add(new GaugeBlueprint(GaugeMetric.DURCHSCHNITTSVERBRAUCH, GaugeType.BIG_NUMBER, 180, 60));
 
         DashboardConfiguration testConfig = new DashboardConfiguration(gauges, "default", true);
 
@@ -89,29 +79,8 @@ public class GaugeManager {
         //getActiveGaugeDescriptions();
     }
 
-    public void GaugeManagerforStatistik(){
-        dashboardConfigs = new Hashtable<>();
-        activeGauges = new ArrayList<>();
-        // TODO get dashboardConfigs from somewhere. xml?
-        saveDashConfig();
-        // making a default config here...
-        ArrayList<GaugeBlueprint> gauges = new ArrayList<>();
 
-        gauges.add(new GaugeBlueprint(GaugeMetric.POWER, GaugeType.GRAPHICAL, 20, 20));
-        gauges.add(new GaugeBlueprint(GaugeMetric.CAPACITY, GaugeType.GRAPHICAL, 180, 40));
-        gauges.add(new GaugeBlueprint(GaugeMetric.VOLTAGE, GaugeType.GRAPHICAL, 20, 160));
-        //gauges.add(new GaugeBlueprint(GaugeMetric.DRIVING_AMP, GaugeType.BIG_NUMBER, 180, 300));
-        gauges.add(new GaugeBlueprint(GaugeMetric.CELL_VOLTAGES, GaugeType.TEXT_ONLY, 20, 300));
-        gauges.add(new GaugeBlueprint(GaugeMetric.CELL_TEMPS, GaugeType.TEXT_ONLY, 170, 300));
-        gauges.add(new GaugeBlueprint(GaugeMetric.VOLTAGE, GaugeType.TEXT_ONLY, 20, 440));
-        gauges.add(new GaugeBlueprint(GaugeMetric.CHARGER_TEMP, GaugeType.BIG_NUMBER, 170, 140));
-
-        DashboardConfiguration testConfig = new DashboardConfiguration(gauges, "default", true);
-
-        currentConfig = saveConfig(testConfig);
-    }
-
-        /**oooooooooooooooooooooooooooooooooooooo
+    /**oooooooooooooooooooooooooooooooooooooo
      *
      * load custom made  confings for testing
      *
@@ -120,7 +89,7 @@ public class GaugeManager {
     public void testLoadConfig() {
 
 
-       // activeGauges.clear();
+        // activeGauges.clear();
 
         updateCurrentConfig(getConfig("rafek"));
 
@@ -130,7 +99,8 @@ public class GaugeManager {
 
     }
 
-    public void loadStatistiken() {
+    public void LoadStatistiken() {
+
 
         ArrayList<GaugeBlueprint> gauges2 = new ArrayList<>();
 
@@ -218,7 +188,7 @@ public class GaugeManager {
 
 
         DashboardConfiguration testConfig1 = new DashboardConfiguration(gauges, "rafek", true);
-       // dashboardConfigs.put( "rafek", testConfig1);
+        // dashboardConfigs.put( "rafek", testConfig1);
         saveConfig(testConfig1);
 
 
@@ -305,7 +275,7 @@ public class GaugeManager {
         ArrayList<String> desc = new ArrayList<>();
         Collection<DashboardConfiguration> configs = dashboardConfigs.values();
         for(DashboardConfiguration c : configs){
-           // desc.add(c.name + " (" + c.gaugeT + ")");
+            // desc.add(c.name + " (" + c.gaugeT + ")");
         }
         return desc;
     }

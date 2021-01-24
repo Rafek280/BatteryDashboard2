@@ -79,6 +79,39 @@ public class RestClient {
 
     BackEndService mApi = getClient().create(BackEndService.class);
 
+    /**
+     * Enables https connection to trust all ssl certificates. The only solutuion found which worked.
+     * This is insecure and enables a man in the middle attack!.
+     */
+    @SuppressLint("TrulyRandom")
+    public void handleSSLHandshake() {
+        try {
+            TrustManager[] trustAllCerts = new TrustManager[]{new X509TrustManager() {
+                public X509Certificate[] getAcceptedIssuers() {
+                    return new X509Certificate[0];
+                }
+
+                @Override
+                public void checkClientTrusted(X509Certificate[] certs, String authType) {
+                }
+
+                @Override
+                public void checkServerTrusted(X509Certificate[] certs, String authType) {
+                }
+            }};
+
+            SSLContext sc = SSLContext.getInstance("SSL");
+            sc.init(null, trustAllCerts, new SecureRandom());
+            HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
+            HttpsURLConnection.setDefaultHostnameVerifier(new HostnameVerifier() {
+                @Override
+                public boolean verify(String arg0, SSLSession arg1) {
+                    return true;
+                }
+            });
+        } catch (Exception ignored) {
+        }
+    }
 
     public void setMyToken(final Context context, Credentials credentials){
 

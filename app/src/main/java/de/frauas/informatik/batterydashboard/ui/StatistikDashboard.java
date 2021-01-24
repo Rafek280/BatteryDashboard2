@@ -13,6 +13,8 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import com.example.batterydashboard.R;
 
 /**
+ * SAME FUNCTIONALITY AS DASHBOARD, displays second frame for statistics
+ *
  * This class is the parent view of the dashboard frame, which is an AbsoluteLayout (as long as
  * it's possible to use this deprecated class, that fits our requirements with draggable views best ;) )
  * A dashboard object belongs to the UiService class and is used to retrieve the dashboard frame

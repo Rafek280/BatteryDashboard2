@@ -5,7 +5,7 @@
         android:icon="@drawable/ic_exit"
         android:iconTint="@color/redAccent"
         android:title="Fenster schliesen" />
-    <item android:id="@+id/menu_cancel"
+    <item android:id="@+id/menu_cancel_stats"
         android:icon="@drawable/ic_x"
         android:title="abbrechen" />
 </menu>
