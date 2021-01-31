@@ -51,8 +51,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RestClient {
 
-    public static Realm realm;
-
+    public static Realm realm;//test
+    int x=0;
     private static final String TAG = RestClient.class.getSimpleName();
     private static final String BASE_URL = "https://10.18.2.151/api/";
     public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
