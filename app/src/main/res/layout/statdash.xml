@@ -18,14 +18,13 @@
 
     <AbsoluteLayout
         android:id="@+id/dashboardFrameStatistiks"
-        android:layout_width="412dp"
-        android:layout_height="756dp"
-        android:layout_marginStart="4dp"
+        android:layout_width="643dp"
+        android:layout_height="736dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.04" />
 
     <Button
         android:id="@+id/ExitButtonStatistiks_ID"

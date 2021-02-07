@@ -87,12 +87,10 @@ public class StatistiksGaugeManager {
      *
      * oooooooooooooooooooooooooooooooooooooo
      */
-    public void testLoadConfig() {
+    public void clearArray() {
 
+        activeGauges.clear();
 
-        // activeGauges.clear();
-
-        updateCurrentConfig(getConfig("rafek"));
 
     }
 

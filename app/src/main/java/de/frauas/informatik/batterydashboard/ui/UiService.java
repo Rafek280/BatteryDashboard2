@@ -22,6 +22,8 @@ import android.widget.ExpandableListView;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.Nullable;
 
 import com.example.batterydashboard.R;
@@ -91,6 +93,7 @@ public class UiService extends Service implements PopupMenu.OnMenuItemClickListe
     private PopupMenu popupExitStatistiksMenu;
     private StatistikDashboard statdashboard;
     private StatistiksGaugeManager gaugeManager_stats;
+    private Boolean loaded = false;
     /**
      * Defines callbacks for service binding, passed to bindService().
      */
@@ -117,7 +120,6 @@ public class UiService extends Service implements PopupMenu.OnMenuItemClickListe
     @Override
     public void onCreate() {
         super.onCreate();
-
 
 
         // create battery object to model battery data
@@ -189,12 +191,13 @@ public class UiService extends Service implements PopupMenu.OnMenuItemClickListe
 
 
         WindowManager.LayoutParams params = new WindowManager.LayoutParams(
-                419,
+                200,
                 MATCH_PARENT, //  WRAP_CONTENT height
                 WindowManager.LayoutParams.TYPE_SYSTEM_ALERT,
                 FLAG_NONBLOCKING_OVERLAY,
                 PixelFormat.TRANSLUCENT);
-        params.gravity = Gravity.CENTER | Gravity.TOP;
+        params.gravity =  params.gravity = Gravity.AXIS_X_SHIFT | Gravity.TOP;
+        //Gravity.CENTER |
 
         windowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
 
@@ -205,7 +208,13 @@ public class UiService extends Service implements PopupMenu.OnMenuItemClickListe
 
         //load second manager for handling statistik gauges
         gaugeManager_stats = StatistiksGaugeManager.getInstance();
-        loadStatDashboardConfig(gaugeManager_stats.instantiateConfigBlueprints(this));
+        if(!loaded){
+            loadStatDashboardConfig(gaugeManager_stats.instantiateConfigBlueprints(this));
+            loaded = true;
+        }
+       else{
+
+        }
 
     }
 
@@ -422,6 +431,7 @@ public class UiService extends Service implements PopupMenu.OnMenuItemClickListe
     private void exitStatistiks(){
         windowManager.removeView(statdashboard);
 
+
     }
 
 
@@ -495,49 +505,7 @@ public class UiService extends Service implements PopupMenu.OnMenuItemClickListe
     // The overridden method from the implemented PopupMenu.OnMenuItemClickListener interface to assign functionality to
     // the close menu's itemswerfgwerge
 
-    private void setConfigTogglerForStatistiks(ImageButton btn) {
-        btn.setOnClickListener((l) -> {
-            if(!configWindowVisible) {
-                configWindowVisible = true;
 
-                // create the config window
-                WindowManager.LayoutParams params = new WindowManager.LayoutParams(
-                        600,
-                        MATCH_PARENT, //  WRAP_CONTENT height
-                        WindowManager.LayoutParams.TYPE_SYSTEM_ALERT,
-                        FLAG_NONBLOCKING_OVERLAY,
-                        PixelFormat.TRANSLUCENT);
-                params.gravity = Gravity.END | Gravity.TOP;
-
-                windowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
-                configWindow = new ConfigWindow(this);
-                windowManager.addView(configWindow, params);
-
-                // set up the expandable list
-                ViewGroup content = configWindow.getContent();
-                List<String> expandableListTitle;
-                ExpandableListView expandableListView = content.findViewById(R.id.expandableListView);
-                HashMap<String, List<GaugeBlueprint>> expandableListDetail = ExpListGaugeDataProvider.getAvailableGaugesData();
-                expandableListTitle = new ArrayList<>(expandableListDetail.keySet());
-                ExpandableListAdapter expandableListAdapter = new ExpListForGaugeBlueprintsAdapter(this, expandableListTitle, expandableListDetail);
-                expandableListView.setAdapter(expandableListAdapter);
-
-                // end DeleteMode if on
-                if(IsInDeleteMode){
-                    dashboard.getContent().findViewById(R.id.delete_btn).callOnClick();
-                }
-
-                // set up closing functionality
-                setConfigToggler(configWindow.getCloseBtn());
-                // the following causes the window to also close when clicking on the darkened dashboard
-                setConfigToggler(configWindow.getContent().findViewById(R.id.config_window_close_scrim));
-            }
-            else{
-                configWindowVisible = false;
-                windowManager.removeView(configWindow);
-            }
-        });
-    }
     public void loadSavedConfig(){
         //gaugeManager.testLoadConfig();
         updateDashboardConfig();
@@ -552,8 +520,11 @@ public class UiService extends Service implements PopupMenu.OnMenuItemClickListe
                 return true;
 
             case R.id.menu_exit_statistiks:
+                gaugeManager_stats.clearArray();
+                loaded = false;
                 exitStatistiks();
-                statsOn = false;
+                statsOn=false;
+
                 return true;
 
 
@@ -580,8 +551,14 @@ public class UiService extends Service implements PopupMenu.OnMenuItemClickListe
 
             case R.id.menu_statistiken:
 
-                openStatistiksDashboard();
-                statsOn = true;
+               if(!statsOn){
+                   openStatistiksDashboard();
+                   statsOn = true;
+               }
+               else{
+                   Toast toast = Toast.makeText(this, "Fenster ist berits offen!", Toast.LENGTH_SHORT);
+               }
+
                 //gaugeManager.testDelete(this);
 
                // RestClient restclient = new RestClient();
