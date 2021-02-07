@@ -99,16 +99,14 @@ public class RestClient {
 
                     realm = Realm.getDefaultInstance();
                     final RealmResults<Token> tokenRealmQuery = realm.where(Token.class).findAll();
-                    realm.executeTransactionAsync(new Realm.Transaction() {
-                        @Override
-                        public void execute(Realm realm) {
+                    realm.executeTransactionAsync(realm -> {
 
-                            if (!tokenRealmQuery.isEmpty())
-                                tokenRealmQuery.deleteAllFromRealm();
+                       // if (!tokenRealmQuery.isEmpty())
+                            //tokenRealmQuery.deleteAllFromRealm();
 
-                            Token myToken = realm.createObject(Token.class);
-                            myToken.setToken(token.getToken());
-                        }
+                        Token myToken = realm.createObject(Token.class);
+                        myToken.setToken(token.getToken());
+                        Log.d(TAG, "Verbindung hat anscheinend geklappt.");
                     });
                 }
 

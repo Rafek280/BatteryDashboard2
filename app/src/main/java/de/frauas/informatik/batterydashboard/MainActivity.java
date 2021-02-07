@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.example.batterydashboard.R;
 import androidx.appcompat.app.AppCompatActivity;
 import de.frauas.informatik.batterydashboard.background.BatteryDataService;
+import de.frauas.informatik.batterydashboard.dataSync.App;
 import de.frauas.informatik.batterydashboard.ui.UiService;
 import static android.view.WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
 import static android.view.WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL;
@@ -62,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
         // start the OverlayService that controls UI
         Intent dataService = new Intent(this, BatteryDataService.class);
         Intent uiService = new Intent(this, UiService.class);
+        Intent dataSync = new Intent(this, App.class);
         //startService(dataService);
         startService(uiService);
 

@@ -19,11 +19,12 @@ public class App extends Application {
        // MultiDex.install(this);
     }
 
+    public void initRealm(){
+
+    }
     @Override
     public void onCreate() {
         super.onCreate();
-
-
         Realm.init(this);
 
         //byte[] key = new byte[64];
@@ -44,7 +45,7 @@ public class App extends Application {
                 .build();
         Realm.deleteRealm(realmConfiguration);
 
-      /*  Stetho.initialize(
+       /*Stetho.initialize(
                 Stetho.newInitializerBuilder(this)
                         .enableDumpapp(Stetho.defaultDumperPluginsProvider(this))
                         .enableWebKitInspector(RealmInspectorModulesProvider.builder(this).build())

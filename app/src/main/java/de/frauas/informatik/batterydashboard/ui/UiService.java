@@ -31,6 +31,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import de.frauas.informatik.batterydashboard.background.BatteryDataService;
+import de.frauas.informatik.batterydashboard.dataSync.App;
 import de.frauas.informatik.batterydashboard.dataSync.RestClient;
 import de.frauas.informatik.batterydashboard.enums.GaugeType;
 
@@ -65,6 +66,9 @@ public class UiService extends Service implements PopupMenu.OnMenuItemClickListe
     public static final int FLAG_NONBLOCKING_OVERLAY = FLAG_NOT_TOUCH_MODAL | FLAG_NOT_FOCUSABLE;
     private Dashboard dashboard;
     private ConfigWindow configWindow;
+
+    private App syncData = new App();
+
 
     private boolean configWindowVisible = false;
     private GaugeManager gaugeManager;
@@ -114,6 +118,8 @@ public class UiService extends Service implements PopupMenu.OnMenuItemClickListe
     public void onCreate() {
         super.onCreate();
 
+
+
         // create battery object to model battery data
         // the battery object will be passed to the dataService and be shared by both services
         battery = new Battery(getResources());
@@ -157,7 +163,9 @@ public class UiService extends Service implements PopupMenu.OnMenuItemClickListe
         this.setConfigToggler(dashboard.getConfigButton());
         this.setProfileButton(dashboard.getProfileButton());
         this.setDeleteModeButton(dashboard.getContent().findViewById(R.id.delete_btn)); // TESTING!
+        syncData.initRealm();
     }
+
 
 
     /**
@@ -273,11 +281,12 @@ public class UiService extends Service implements PopupMenu.OnMenuItemClickListe
             for(Gauge g : gaugeManager.getActiveGauges()){
                 updateGauge(g);
             }
-            if(statsOn = true){
-                for(Gauge g : gaugeManager.getActiveGauges()){
+            //das sollte hier eigentlich die stasttistken menu updaten, geht aber net
+           /* if(statsOn = true){
+                for(Gauge g : gaugeManager_stats.getActiveGauges()){
                     updateGauge(g);
                 }
-            }
+            }*/
 
 
 
@@ -564,8 +573,10 @@ public class UiService extends Service implements PopupMenu.OnMenuItemClickListe
                 return true;
 
             case R.id.menu_save:
-                gaugeManager.saveDashConfig();
-                return true;
+
+
+                //gaugeManager.saveDashConfig();
+               // return true;
 
             case R.id.menu_statistiken:
 
@@ -584,5 +595,7 @@ public class UiService extends Service implements PopupMenu.OnMenuItemClickListe
                 return false;
         }
     }
+
+
 
 }
