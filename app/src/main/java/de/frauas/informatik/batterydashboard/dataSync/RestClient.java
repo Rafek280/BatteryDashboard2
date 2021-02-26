@@ -101,8 +101,8 @@ public class RestClient {
                     final RealmResults<Token> tokenRealmQuery = realm.where(Token.class).findAll();
                     realm.executeTransactionAsync(realm -> {
 
-                       // if (!tokenRealmQuery.isEmpty())
-                            //tokenRealmQuery.deleteAllFromRealm();
+                        if (!tokenRealmQuery.isEmpty())
+                            tokenRealmQuery.deleteAllFromRealm();
 
                         Token myToken = realm.createObject(Token.class);
                         myToken.setToken(token.getToken());

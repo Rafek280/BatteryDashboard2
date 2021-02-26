@@ -545,9 +545,8 @@ public class UiService extends Service implements PopupMenu.OnMenuItemClickListe
 
             case R.id.menu_save:
 
-
-                //gaugeManager.saveDashConfig();
-               // return true;
+                gaugeManager.saveDashConfig();
+                return true;
 
             case R.id.menu_statistiken:
 
