@@ -10,6 +10,7 @@ import android.content.ServiceConnection;
 import android.graphics.PixelFormat;
 import android.os.Handler;
 import android.os.IBinder;
+import android.util.LayoutDirection;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuInflater;
@@ -41,6 +42,7 @@ import de.frauas.informatik.batterydashboard.enums.GaugeType;
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static android.view.WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
 import static android.view.WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL;
+import static android.view.WindowManager.LayoutParams.LAYOUT_CHANGED;
 
 /**
  * This is the service that is started by the MainActivity. MainActivity then finishes itself and
@@ -143,7 +145,7 @@ public class UiService extends Service implements PopupMenu.OnMenuItemClickListe
 
         // create the UI
         WindowManager.LayoutParams params = new WindowManager.LayoutParams(
-                346,
+                340,
                 MATCH_PARENT, //  WRAP_CONTENT height
                 WindowManager.LayoutParams.TYPE_SYSTEM_ALERT,
                 FLAG_NONBLOCKING_OVERLAY,
@@ -151,9 +153,15 @@ public class UiService extends Service implements PopupMenu.OnMenuItemClickListe
         params.gravity = Gravity.END | Gravity.TOP;
 
         windowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
-        //assert windowManager != null;
+        assert windowManager != null;
         dashboard = new Dashboard(this);
+        //try{
         windowManager.addView(dashboard, params);
+
+      /*  } catch (Exception e) {
+            e.printStackTrace();
+            Log.e("IO","IO"+e);
+        }*/
 
         // get DashboardManager (Singleton) and load Gauges from Blueprints in a dashboard config
         gaugeManager = GaugeManager.getInstance();
@@ -191,12 +199,14 @@ public class UiService extends Service implements PopupMenu.OnMenuItemClickListe
 
 
         WindowManager.LayoutParams params = new WindowManager.LayoutParams(
-                200,
+                470,
+
                 MATCH_PARENT, //  WRAP_CONTENT height
                 WindowManager.LayoutParams.TYPE_SYSTEM_ALERT,
                 FLAG_NONBLOCKING_OVERLAY,
                 PixelFormat.TRANSLUCENT);
-        params.gravity =  params.gravity = Gravity.AXIS_X_SHIFT | Gravity.TOP;
+        //LayoutDirection  direction
+        params.gravity = Gravity.END;
         //Gravity.CENTER |
 
         windowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
@@ -212,7 +222,7 @@ public class UiService extends Service implements PopupMenu.OnMenuItemClickListe
             loadStatDashboardConfig(gaugeManager_stats.instantiateConfigBlueprints(this));
             loaded = true;
         }
-       else{
+        else{
 
         }
 
@@ -220,7 +230,7 @@ public class UiService extends Service implements PopupMenu.OnMenuItemClickListe
 
     /**
      * loads the gauges of the given list to the dashboard, meaning it adds the views to the dashboard frame.
-     * @param gauges list of Gauge objects 
+     * @param gauges list of Gauge objects
      */
     private void loadDashboardConfig(ArrayList<Gauge> gauges){
         for(Gauge g : gauges){
@@ -290,12 +300,12 @@ public class UiService extends Service implements PopupMenu.OnMenuItemClickListe
             for(Gauge g : gaugeManager.getActiveGauges()){
                 updateGauge(g);
             }
-            //das sollte hier eigentlich die stasttistken menu updaten, geht aber net
-           /* if(statsOn = true){
+
+            if(statsOn == true){
                 for(Gauge g : gaugeManager_stats.getActiveGauges()){
                     updateGauge(g);
                 }
-            }*/
+            }
 
 
 
@@ -550,17 +560,17 @@ public class UiService extends Service implements PopupMenu.OnMenuItemClickListe
 
             case R.id.menu_statistiken:
 
-               if(!statsOn){
-                   openStatistiksDashboard();
-                   statsOn = true;
-               }
-               else{
-                   Toast toast = Toast.makeText(this, "Fenster ist berits offen!", Toast.LENGTH_SHORT);
-               }
+                if(!statsOn){
+                    openStatistiksDashboard();
+                    statsOn = true;
+                }
+                else{
+                    Toast toast = Toast.makeText(this, "Fenster ist berits offen!", Toast.LENGTH_SHORT);
+                }
 
                 //gaugeManager.testDelete(this);
 
-               // RestClient restclient = new RestClient();
+                // RestClient restclient = new RestClient();
                 return true;
 
             case R.id.menu_clear:

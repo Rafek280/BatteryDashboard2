@@ -67,9 +67,9 @@ public class StatistiksGaugeManager {
 
 
 
-        gauges.add(new GaugeBlueprint(GaugeMetric.POWER, GaugeType.GRAPHICAL, 20, 20));
-        gauges.add(new GaugeBlueprint(GaugeMetric.CAPACITY, GaugeType.GRAPHICAL, 180, 40));
-        gauges.add(new GaugeBlueprint(GaugeMetric.VOLTAGE, GaugeType.GRAPHICAL, 20, 160));
+        gauges.add(new GaugeBlueprint(GaugeMetric.POWER, GaugeType.GRAPHICAL, 20, 32));
+        gauges.add(new GaugeBlueprint(GaugeMetric.CAPACITY, GaugeType.GRAPHICAL, 20, 322));
+        gauges.add(new GaugeBlueprint(GaugeMetric.VOLTAGE, GaugeType.GRAPHICAL, 20, 172));
 
         DashboardConfiguration testConfig = new DashboardConfiguration(gauges, "default", true);
 
@@ -103,8 +103,8 @@ public class StatistiksGaugeManager {
 
         ArrayList<GaugeBlueprint> gauges2 = new ArrayList<>();
 
-        gauges2.add(new GaugeBlueprint(GaugeMetric.DURCHSCHNITTSGESCHWINDIGKEIT, GaugeType.GRAPHICAL, 20, 60));
-        gauges2.add(new GaugeBlueprint(GaugeMetric.DURCHSCHNITTSVERBRAUCH, GaugeType.BIG_NUMBER, 180, 60));
+        gauges2.add(new GaugeBlueprint(GaugeMetric.DURCHSCHNITTSGESCHWINDIGKEIT, GaugeType.GRAPHICAL, 20, 72));
+        gauges2.add(new GaugeBlueprint(GaugeMetric.DURCHSCHNITTSVERBRAUCH, GaugeType.BIG_NUMBER, 180, 72));
 
         DashboardConfiguration testConfig = new DashboardConfiguration(gauges2, "default2", true);
 

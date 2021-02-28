@@ -39,7 +39,7 @@ public class GaugeManager {
     private Hashtable<String, DashboardConfiguration> dashboardConfigs;
     private DashboardConfiguration currentConfig;
     private ArrayList<Gauge> activeGauges;
-    static final String BROADCAST_ACTION = "requestConfigUpdate";
+        static final String BROADCAST_ACTION = "requestConfigUpdate";
     private static Intent intent = new Intent(BROADCAST_ACTION);
     private boolean IsDeleteMode;
 
@@ -212,13 +212,13 @@ public class GaugeManager {
     public void saveDashConfig(){
 
 
-        ArrayList<GaugeBlueprint> gauges = new ArrayList<>();
+        ArrayList<GaugeBlueprint> gauges ;
 
         gauges= getCurrentBlueprints();
 
 
         DashboardConfiguration testConfig1 = new DashboardConfiguration(gauges, "rafek", true);
-       // dashboardConfigs.put( "rafek", testConfig1);
+        //dashboardConfigs.put( "rafek", testConfig1);
         saveConfig(testConfig1);
 
 
