@@ -2,6 +2,7 @@ package de.frauas.informatik.batterydashboard.dataSync;
 
 
 import android.app.Application;
+import android.app.ProgressDialog;
 import android.content.Context;
 
 //import android.support.multidex.MultiDex;
@@ -35,10 +36,12 @@ public class App extends Application {
                 .build();
         Realm.setDefaultConfiguration(config);
         Credentials credentials = new Credentials();
+       //Für Die App Leute nicht für uns
         credentials.setUsername("CarDevice");
         credentials.setPassword("1234567890");
         RestClient restClient = new RestClient();
         restClient.setMyToken(App.this, credentials);
+        //restClient.getAllUser(App.this, ProgressDialog , "");
 
         RealmConfiguration realmConfiguration = new RealmConfiguration.Builder()
                 .deleteRealmIfMigrationNeeded()

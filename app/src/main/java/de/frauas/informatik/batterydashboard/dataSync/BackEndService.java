@@ -36,10 +36,10 @@ public interface BackEndService {
     @POST("login")
     Call<Token> getToken(@Body Credentials credentials);
 
-  /*  @GET("users")
+    @GET("users")
     Call<ArrayList<User>> listAllUsers(@Header("Authorization") String token);
 
-    @GET("cars/{car}")
+  /*  @GET("cars/{car}")
     Call<ArrayList<Car>> listCars(@Path("car") String car);
 
     @Headers({"Content-Type: application/json"})

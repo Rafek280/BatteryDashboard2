@@ -37,6 +37,7 @@ import javax.net.ssl.X509TrustManager;
 import de.frauas.informatik.batterydashboard.dataSync.Models.Credentials;
 import de.frauas.informatik.batterydashboard.dataSync.Models.Token;
 import io.realm.Realm;
+import io.realm.RealmModel;
 import io.realm.RealmResults;
 import okhttp3.Authenticator;
 import okhttp3.Interceptor;
@@ -151,81 +152,81 @@ public class RestClient {
     }
 
 
-   /* public void getAllUser(final Context context, final ProgressDialog progressDialog, Token token){
 
-        progressDialog.setIndeterminate(true);
-        progressDialog.setCancelable(false);
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        progressDialog.show();
+        public void getAllUser ( final Context context, final ProgressDialog progressDialog, Token token){
 
-        Call<ArrayList<User>> callUser = mApi.listAllUsers("Bearer " + token.getToken());
-        callUser.enqueue(new Callback<ArrayList<User>>() {
-            @Override
-            public void onResponse(Call<ArrayList<User>> call, Response<ArrayList<User>> response) {
+            progressDialog.setIndeterminate(true);
+            progressDialog.setCancelable(false);
+            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progressDialog.show();
 
-                int status = response.code();
+            Call<ArrayList<User>> callUser = mApi.listAllUsers("Bearer " + token.getToken());
+            callUser.enqueue(new Callback<ArrayList<User>>() {
+                @Override
+                public void onResponse(Call<ArrayList<User>> call, Response<ArrayList<User>> response) {
 
-                if (status == 200) {
+                    int status = response.code();
 
-                    final ArrayList<User> userArrayList = response.body();
-                    Log.d(TAG, "User hat geklappt!");
+                    if (status == 200) {
 
-                    realm = Realm.getDefaultInstance();
-                    realm.executeTransaction(new Realm.Transaction() {
-                        @Override
-                        public void execute(Realm realm) {
+                        final ArrayList<User> userArrayList = response.body();
+                        Log.d(TAG, "User hat geklappt!");
 
-                            for (int i = 0; i < userArrayList.size(); i++) {
+                        realm = Realm.getDefaultInstance();
+                        realm.executeTransaction(new Realm.Transaction() {
+                            @Override
+                            public void execute(Realm realm) {
 
-                                User userRealm = new User();
+                                for (int i = 0; i < userArrayList.size(); i++) {
 
-                                userRealm.set_id(userArrayList.get(i).get_id());
-                                userRealm.setUsername(userArrayList.get(i).getUsername());
-                                userRealm.setFirstname(userArrayList.get(i).getFirstname());
-                                userRealm.setLastname(userArrayList.get(i).getLastname());
-                                userRealm.setHash(userArrayList.get(i).getHash());
-                                userRealm.setSalt(userArrayList.get(i).getSalt());
+                                    User userRealm = new User();
 
-                                realm.insertOrUpdate(userRealm);
+                                    userRealm.set_id(userArrayList.get(i).get_id());
+                                    userRealm.setUsername(userArrayList.get(i).getUsername());
+
+
+                                    realm.insertOrUpdate((RealmModel) userRealm);
+                                }
                             }
-                        }
-                    });
+                        });
 
-                    progressDialog.dismiss();
-                } else if (status == 401) {
-                    Toast.makeText(context, "Unauthorized: " + status, Toast.LENGTH_SHORT).show();
-                    progressDialog.dismiss();
-                } else if (status == 403) {
-                    Toast.makeText(context, "Forbidden: " + status, Toast.LENGTH_SHORT).show();
-                    progressDialog.dismiss();
-                } else if (status == 500) {
-                    Toast.makeText(context, "Error: " + status, Toast.LENGTH_SHORT).show();
-                    progressDialog.dismiss();
+
+                        progressDialog.dismiss();
+                    } else if (status == 401) {
+                        Toast.makeText(context, "Unauthorized: " + status, Toast.LENGTH_SHORT).show();
+                        progressDialog.dismiss();
+                    } else if (status == 403) {
+                        Toast.makeText(context, "Forbidden: " + status, Toast.LENGTH_SHORT).show();
+                        progressDialog.dismiss();
+                    } else if (status == 500) {
+                        Toast.makeText(context, "Error: " + status, Toast.LENGTH_SHORT).show();
+                        progressDialog.dismiss();
+                    }
+
                 }
 
-            }
+                @Override
+                public void onFailure(Call<ArrayList<User>> call, Throwable t) {
 
-            @Override
-            public void onFailure(Call<ArrayList<User>> call, Throwable t) {
+                    Log.d(TAG, "User hat nicht geklappt!");
 
-                Log.d(TAG, "User hat nicht geklappt!");
+                    Toast toast = Toast.makeText(context, "Failed: " + t.getMessage(), Toast.LENGTH_SHORT);
+                    View toastView = toast.getView(); //This'll return the default View of the Toast.
 
-                Toast toast = Toast.makeText(context, "Failed: " + t.getMessage(), Toast.LENGTH_SHORT);
-                View toastView = toast.getView(); //This'll return the default View of the Toast.
+                    // And now you can get the TextView of the default View of the Toast.
+                    TextView toastMessage = (TextView) toastView.findViewById(android.R.id.message);
+                    toastMessage.setTextSize(25);
+                    toastMessage.setTextColor(Color.WHITE);
+                    toastMessage.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+                    toastMessage.setGravity(Gravity.CENTER);
+                    toastMessage.setCompoundDrawablePadding(16);
+                    // toastView.setBackgroundColor(context.getResources().getColor(R.color.toast_color));
+                    toast.show();
+                }
+            });
+        }
 
-                 And now you can get the TextView of the default View of the Toast.
-                TextView toastMessage = (TextView) toastView.findViewById(android.R.id.message);
-                toastMessage.setTextSize(25);
-                toastMessage.setTextColor(Color.WHITE);
-                toastMessage.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
-                toastMessage.setGravity(Gravity.CENTER);
-                toastMessage.setCompoundDrawablePadding(16);
-                toastView.setBackgroundColor(context.getResources().getColor(R.color.toast_color));
-                toast.show();
-            }
-        });
-    }
-*/
+
 /*
     public void getAllCars(final Context context, final ProgressDialog progressDialog){
 
