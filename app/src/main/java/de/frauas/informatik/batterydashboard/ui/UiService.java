@@ -49,7 +49,6 @@ import static android.view.WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL;
  * any other GUI and an activity cannot provide this functionality because it subject to Lifecycle events like e.g. Pause...
  * @see <a href="https://developer.android.com/guide/components/activities/activity-lifecycle">Android Activity documentation</a> </br></br>
  *
- *
  * This service is responsible for drawing UI elements on the screen. It covers one third of the screen (346px) with a dashboard.
  * This service also starts and binds the DataService, that will provide data through a shared battery object.</br>
  * The functionality is distributed to two services for SoC reasons (separation of concern).
@@ -79,7 +78,6 @@ public class UiService extends Service implements PopupMenu.OnMenuItemClickListe
     private BatteryDataService dataService;
     private boolean isDataServiceBound = false;
     Battery battery;
-    RestClient client;
     private final Handler handler = new Handler();
     private WindowManager windowManager;
     private boolean IsInDeleteMode;
@@ -198,7 +196,7 @@ public class UiService extends Service implements PopupMenu.OnMenuItemClickListe
                 WindowManager.LayoutParams.TYPE_SYSTEM_ALERT,
                 FLAG_NONBLOCKING_OVERLAY,
                 PixelFormat.TRANSLUCENT);
-        params.gravity =  params.gravity = Gravity.CENTER | Gravity.TOP;
+        params.gravity =  params.gravity = Gravity.AXIS_X_SHIFT | Gravity.TOP;
         //Gravity.CENTER |
 
         windowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
@@ -526,13 +524,13 @@ public class UiService extends Service implements PopupMenu.OnMenuItemClickListe
                 loaded = false;
                 exitStatistiks();
                 statsOn=false;
+
                 return true;
 
 
             case R.id.menu_cancel:
                 popupExitMenu.dismiss();
                 return true;
-
             case R.id.menu_cancel_stats:
                 popupExitStatistiksMenu.dismiss();
                 return true;
@@ -546,8 +544,9 @@ public class UiService extends Service implements PopupMenu.OnMenuItemClickListe
                 return true;
 
             case R.id.menu_save:
-                gaugeManager.loadText();
-               // return true;
+
+                gaugeManager.saveDashConfig();
+                return true;
 
             case R.id.menu_statistiken:
 
@@ -566,7 +565,6 @@ public class UiService extends Service implements PopupMenu.OnMenuItemClickListe
 
             case R.id.menu_clear:
                 gaugeManager.testDelete(this);
-
                 return true;
 
             default:
