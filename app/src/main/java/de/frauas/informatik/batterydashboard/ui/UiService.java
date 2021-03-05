@@ -155,13 +155,10 @@ public class UiService extends Service implements PopupMenu.OnMenuItemClickListe
         windowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
         assert windowManager != null;
         dashboard = new Dashboard(this);
-        //try{
+
         windowManager.addView(dashboard, params);
 
-      /*  } catch (Exception e) {
-            e.printStackTrace();
-            Log.e("IO","IO"+e);
-        }*/
+
 
         // get DashboardManager (Singleton) and load Gauges from Blueprints in a dashboard config
         gaugeManager = GaugeManager.getInstance();
@@ -169,14 +166,12 @@ public class UiService extends Service implements PopupMenu.OnMenuItemClickListe
 
         // bind buttons etc
 
-        this.setExitButton(dashboard.getExitButton());
+        //this.setExitButton(dashboard.getExitButton());
         this.setConfigToggler(dashboard.getConfigButton());
         this.setProfileButton(dashboard.getProfileButton());
         this.setDeleteModeButton(dashboard.getContent().findViewById(R.id.delete_btn)); // TESTING!
         syncData.initRealm();
     }
-
-
 
     /**
      * opens the statiss dashboard, displaying the custom gauges
@@ -225,9 +220,7 @@ public class UiService extends Service implements PopupMenu.OnMenuItemClickListe
         else{
 
         }
-
     }
-
     /**
      * loads the gauges of the given list to the dashboard, meaning it adds the views to the dashboard frame.
      * @param gauges list of Gauge objects
@@ -300,19 +293,14 @@ public class UiService extends Service implements PopupMenu.OnMenuItemClickListe
             for(Gauge g : gaugeManager.getActiveGauges()){
                 updateGauge(g);
             }
-
             if(statsOn == true){
                 for(Gauge g : gaugeManager_stats.getActiveGauges()){
                     updateGauge(g);
                 }
             }
-
-
-
             handler.postDelayed(this, uiUpdateFrequency);
         }
     };
-
 
 
     /**
@@ -332,7 +320,7 @@ public class UiService extends Service implements PopupMenu.OnMenuItemClickListe
                 gauge.update(battery.power());
                 break;
             case DURCHSCHNITTSGESCHWINDIGKEIT:
-                gauge.update(battery.voltageSum());
+                gauge.update(battery.durchscnitt());
                 break;
             case DRIVING_AMP:
                 gauge.update(battery.drivingAmperage());
@@ -405,8 +393,6 @@ public class UiService extends Service implements PopupMenu.OnMenuItemClickListe
         });
     }
 
-
-
     /**
      * Makes the specified Button the control that closes the app.
      * In the anonymous OnClickListener a popup menu is inflated from an xml file in resources/menu.
@@ -440,10 +426,7 @@ public class UiService extends Service implements PopupMenu.OnMenuItemClickListe
      */
     private void exitStatistiks(){
         windowManager.removeView(statdashboard);
-
-
     }
-
 
     /**
      * Makes the specified ImageButton the control that toggles the dashboard's deleteMode.
@@ -481,7 +464,6 @@ public class UiService extends Service implements PopupMenu.OnMenuItemClickListe
                         FLAG_NONBLOCKING_OVERLAY,
                         PixelFormat.TRANSLUCENT);
                 params.gravity = Gravity.END | Gravity.TOP;
-
                 windowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
                 configWindow = new ConfigWindow(this);
                 windowManager.addView(configWindow, params);
@@ -515,17 +497,15 @@ public class UiService extends Service implements PopupMenu.OnMenuItemClickListe
     // The overridden method from the implemented PopupMenu.OnMenuItemClickListener interface to assign functionality to
     // the close menu's itemswerfgwerge
 
-
     public void loadSavedConfig(){
         //gaugeManager.testLoadConfig();
         updateDashboardConfig();
     }
 
-
     @Override
     public boolean onMenuItemClick(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.menu_exit_app:
+           case R.id.menu_exit_app:
                 exitApp();
                 return true;
 
@@ -534,9 +514,7 @@ public class UiService extends Service implements PopupMenu.OnMenuItemClickListe
                 loaded = false;
                 exitStatistiks();
                 statsOn=false;
-
                 return true;
-
 
             case R.id.menu_cancel:
                 popupExitMenu.dismiss();
@@ -544,7 +522,6 @@ public class UiService extends Service implements PopupMenu.OnMenuItemClickListe
             case R.id.menu_cancel_stats:
                 popupExitStatistiksMenu.dismiss();
                 return true;
-
 
             case R.id.menu_load:
                 gaugeManager.testDelete(this);
@@ -554,12 +531,10 @@ public class UiService extends Service implements PopupMenu.OnMenuItemClickListe
                 return true;
 
             case R.id.menu_save:
-
                 gaugeManager.saveDashConfig();
                 return true;
 
             case R.id.menu_statistiken:
-
                 if(!statsOn){
                     openStatistiksDashboard();
                     statsOn = true;
@@ -567,21 +542,13 @@ public class UiService extends Service implements PopupMenu.OnMenuItemClickListe
                 else{
                     Toast toast = Toast.makeText(this, "Fenster ist berits offen!", Toast.LENGTH_SHORT);
                 }
-
-                //gaugeManager.testDelete(this);
-
-                // RestClient restclient = new RestClient();
                 return true;
 
             case R.id.menu_clear:
                 gaugeManager.testDelete(this);
                 return true;
-
             default:
                 return false;
         }
     }
-
-
-
 }

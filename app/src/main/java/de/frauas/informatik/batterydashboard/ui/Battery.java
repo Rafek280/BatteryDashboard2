@@ -27,7 +27,7 @@ import static de.frauas.informatik.batterydashboard.background.StatReceiver.VOLT
  *
  * @see de.frauas.informatik.batterydashboard.background.BatteryDataService BatteryDataService (set printInfo to true for visualization of battery data)
  * @author filzinge@stud.fra-uas.de
-* */
+ * */
 
 public class Battery {
     private final Resources r;
@@ -70,7 +70,7 @@ public class Battery {
         float[] cellVoltages;
         int[] cellTemps;
         float chargingAmperage;
-        boolean chargerTempWarning;
+        // boolean chargerTempWarning;
         int chargerTemp;
         int capacity;
         private final int blockId;
@@ -165,9 +165,9 @@ public class Battery {
 
     }
 
-    public boolean isCharging() {
+    /*public boolean isCharging() {
         return isCharging;
-    }
+    }*/
 
     public float drivingAmperage(){
         return currentDrivingAmperage;
@@ -175,6 +175,15 @@ public class Battery {
 
     public int voltageSum(){
         float sum = 0;
+        for (Block block : blocks) {
+            for (float cV : block.cellVoltages) {
+                sum += cV;
+            }
+        }
+        return Math.round(sum);
+    }
+    public int durchscnitt(){
+        float sum = 3;
         for (Block block : blocks) {
             for (float cV : block.cellVoltages) {
                 sum += cV;
@@ -299,7 +308,6 @@ public class Battery {
         }
         return min;
     }
-
 
     /**
      * the overwritten toString method creates a string describing the setup and current values of the battery

@@ -67,8 +67,8 @@ public class StatistiksGaugeManager {
 
 
 
-        gauges.add(new GaugeBlueprint(GaugeMetric.POWER, GaugeType.GRAPHICAL, 20, 32));
-        gauges.add(new GaugeBlueprint(GaugeMetric.CAPACITY, GaugeType.GRAPHICAL, 20, 322));
+        gauges.add(new GaugeBlueprint(GaugeMetric.DURCHSCHNITTSVERBRAUCH, GaugeType.GRAPHICAL, 20, 32));
+        gauges.add(new GaugeBlueprint(GaugeMetric.TAGES_KILOMETER_ZAEHLER, GaugeType.GRAPHICAL, 20, 322));
         gauges.add(new GaugeBlueprint(GaugeMetric.VOLTAGE, GaugeType.GRAPHICAL, 20, 172));
 
         DashboardConfiguration testConfig = new DashboardConfiguration(gauges, "default", true);
@@ -98,7 +98,7 @@ public class StatistiksGaugeManager {
 
     }
 
-    public void LoadStatistiken() {
+    /*public void LoadStatistiken() {
 
 
         ArrayList<GaugeBlueprint> gauges2 = new ArrayList<>();
@@ -111,7 +111,7 @@ public class StatistiksGaugeManager {
         currentConfig = saveConfig(testConfig);
         updateCurrentConfig(getConfig("default2"));
 
-    }
+    }*/
 
     public void testDelete(Context context){
 
@@ -181,10 +181,8 @@ public class StatistiksGaugeManager {
     public void saveDashConfig(){
 
 
-        ArrayList<GaugeBlueprint> gauges = new ArrayList<>();
-
+        ArrayList<GaugeBlueprint> gauges;
         gauges= getCurrentBlueprints();
-
 
         DashboardConfiguration testConfig1 = new DashboardConfiguration(gauges, "rafek", true);
         // dashboardConfigs.put( "rafek", testConfig1);
