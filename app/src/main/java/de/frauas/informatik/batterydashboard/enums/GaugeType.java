@@ -8,7 +8,7 @@ package de.frauas.informatik.batterydashboard.enums;
 
 public enum GaugeType {
     TEXT_ONLY ("Text"),
-    BIG_NUMBER ("große Zahl"),
+    BIG_NUMBER ("großeZahl"),
     GRAPHICAL ("grafisch");
 
     public final String description;

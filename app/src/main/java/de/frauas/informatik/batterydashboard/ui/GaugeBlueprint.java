@@ -62,6 +62,6 @@ class GaugeBlueprint {
 
     @Override
     public String toString(){
-        return gaugeMetric.label + " (" + gaugeType.description + ")" +" (" + posX + ")" +" (" + posY + ")";
+        return gaugeMetric.label + " " +  gaugeType.description + " " +  posX + " " +  posY;
     }
 }

@@ -532,16 +532,19 @@ public class UiService extends Service implements PopupMenu.OnMenuItemClickListe
 
             case R.id.menu_save:
                 gaugeManager.saveDashConfig();
+
                 return true;
 
             case R.id.menu_statistiken:
+                gaugeManager.convertGaugesToStrings();
                 if(!statsOn){
                     openStatistiksDashboard();
                     statsOn = true;
                 }
                 else{
-                    Toast toast = Toast.makeText(this, "Fenster ist berits offen!", Toast.LENGTH_SHORT);
+                    Toast toast = Toast.makeText(this, "Fenster ist bereits offen!", Toast.LENGTH_SHORT);
                 }
+
                 return true;
 
             case R.id.menu_clear:

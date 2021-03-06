@@ -10,17 +10,17 @@ package de.frauas.informatik.batterydashboard.enums;
 
 public enum GaugeMetric {
     VOLTAGE ("Spannung","V", 0, 250),
-    DURCHSCHNITTSGESCHWINDIGKEIT ("Geschwindigkeit","KM/H", 0, 400),
+    DURCHSCHNITTSGESCHWINDIGKEIT ("Durchschnitt-Geschwindigkeit","KM/H", 0, 400),
     GESCHWINDIGKEIT ("Geschwindigkeit","KM/H", 0, 400),
     POWER("Leistung","kW", -10, 30),
-    DRIVING_AMP("Driving Amperage","A", -50,150),
-    TAGES_KILOMETER_ZAEHLER("Tages kilometer","A", -50,150),
+    DRIVING_AMP("DrivingAmperage","A", -50,150),
+    TAGES_KILOMETER_ZAEHLER("Tageskilometer","A", -50,150),
     CHARGER_TEMP("Charger-Temp","°C"),
-    CONSUMPTION("Aktueller verbrauch","unit"),
+    CONSUMPTION("Aktueller-Verbrauch","unit"),
     DURCHSCHNITTSVERBRAUCH("Verbrauch","kWh"),
     RANGE("Reichweite","km"),
     CELL_VOLTAGES("Zellspannungen","V"),
-    ODOMETER("Gefahrene Kilometer","km"),
+    ODOMETER("Gefahrene-Kilometer","km"),
     CAPACITY("Kapazität","%", 0, 100),
     CELL_TEMPS("Zelltemperaturen", "°C");
 

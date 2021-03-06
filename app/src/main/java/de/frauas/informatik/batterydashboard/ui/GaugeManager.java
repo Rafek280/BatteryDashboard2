@@ -3,7 +3,10 @@ package de.frauas.informatik.batterydashboard.ui;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
+
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Hashtable;
 import java.util.Set;
@@ -42,6 +45,9 @@ public class GaugeManager {
         static final String BROADCAST_ACTION = "requestConfigUpdate";
     private static Intent intent = new Intent(BROADCAST_ACTION);
     private boolean IsDeleteMode;
+    private ArrayList<String> customUserProfile;
+    private ArrayList<GaugeBlueprint> currentBlueprints = new ArrayList<>();
+    private ArrayList<GaugeBlueprint> gauges = new ArrayList<>();
 
     // singleton implementation
     private static GaugeManager instance;
@@ -58,20 +64,29 @@ public class GaugeManager {
         return instance;
     }
 
-    public void testPrint(){
-        System.out.println("HaLLLWOWOOWOWOWOWOWOWOWOWOW");
-    }
+
     // constructor
     private GaugeManager(){
         dashboardConfigs = new Hashtable<>();
         activeGauges = new ArrayList<>();
+
+        customUserProfile = new ArrayList<String>();
+        customUserProfile.add("Kapazität grafisch 180 40");
+        customUserProfile.add("Leistung grafisch 20 20");
+        customUserProfile.add("Spanung grafisch 20 160");
+        customUserProfile.add("DrivingAmperage großeZahl 180 300");
+        customUserProfile.add("Zellspannungen Text 20 300");
+        customUserProfile.add("Zelltemperaturen Text 170 300");
+        customUserProfile.add("Spannung Text 20 440");
+        customUserProfile.add("Charger-Temp großeZahl 170 140");
         // TODO get dashboardConfigs from somewhere. xml?
         saveDashConfig();
         // making a default config here...
-        ArrayList<GaugeBlueprint> gauges = new ArrayList<>();
 
 
-        gauges.add(new GaugeBlueprint(GaugeMetric.POWER, GaugeType.GRAPHICAL, 20, 20));
+        //LOAD CUSTOM PROFILES
+        loadCustomUserProfilesFromAPI();
+        /*gauges.add(new GaugeBlueprint(GaugeMetric.POWER, GaugeType.GRAPHICAL, 20, 20));
         gauges.add(new GaugeBlueprint(GaugeMetric.CAPACITY, GaugeType.GRAPHICAL, 180, 40));
         gauges.add(new GaugeBlueprint(GaugeMetric.VOLTAGE, GaugeType.GRAPHICAL, 20, 160));
         //gauges.add(new GaugeBlueprint(GaugeMetric.DRIVING_AMP, GaugeType.BIG_NUMBER, 180, 300));
@@ -79,37 +94,17 @@ public class GaugeManager {
         gauges.add(new GaugeBlueprint(GaugeMetric.CELL_TEMPS, GaugeType.TEXT_ONLY, 170, 300));
         gauges.add(new GaugeBlueprint(GaugeMetric.VOLTAGE, GaugeType.TEXT_ONLY, 20, 440));
         gauges.add(new GaugeBlueprint(GaugeMetric.CHARGER_TEMP, GaugeType.BIG_NUMBER, 170, 140));
-
+    */
         DashboardConfiguration testConfig = new DashboardConfiguration(gauges, "default", true);
 
         currentConfig = saveConfig(testConfig);
-        //getActiveGauges();
+        //convertGaugesToStrings();
+       // getActiveGauges();
         //getCurrentBlueprints();
         //getConfigDescriptions();
-        //getActiveGaugeDescriptions();
+       // getActiveGaugeDescriptions();
     }
 
-    public void GaugeManagerforStatistik(){
-        dashboardConfigs = new Hashtable<>();
-        activeGauges = new ArrayList<>();
-        // TODO get dashboardConfigs from somewhere. xml?
-        saveDashConfig();
-        // making a default config here...
-        ArrayList<GaugeBlueprint> gauges = new ArrayList<>();
-
-        gauges.add(new GaugeBlueprint(GaugeMetric.POWER, GaugeType.GRAPHICAL, 20, 20));
-        gauges.add(new GaugeBlueprint(GaugeMetric.CAPACITY, GaugeType.GRAPHICAL, 180, 40));
-        gauges.add(new GaugeBlueprint(GaugeMetric.VOLTAGE, GaugeType.GRAPHICAL, 20, 160));
-        //gauges.add(new GaugeBlueprint(GaugeMetric.DRIVING_AMP, GaugeType.BIG_NUMBER, 180, 300));
-        gauges.add(new GaugeBlueprint(GaugeMetric.CELL_VOLTAGES, GaugeType.TEXT_ONLY, 20, 300));
-        gauges.add(new GaugeBlueprint(GaugeMetric.CELL_TEMPS, GaugeType.TEXT_ONLY, 170, 300));
-        gauges.add(new GaugeBlueprint(GaugeMetric.VOLTAGE, GaugeType.TEXT_ONLY, 20, 440));
-        gauges.add(new GaugeBlueprint(GaugeMetric.CHARGER_TEMP, GaugeType.BIG_NUMBER, 170, 140));
-
-        DashboardConfiguration testConfig = new DashboardConfiguration(gauges, "default", true);
-
-        currentConfig = saveConfig(testConfig);
-    }
 
         /**oooooooooooooooooooooooooooooooooooooo
      *
@@ -126,9 +121,237 @@ public class GaugeManager {
 
     }
 
-    public void loadText(){
-
+    public void testLoadAPI(){
+        gauges.add(new GaugeBlueprint(GaugeMetric.POWER, GaugeType.GRAPHICAL, 180, 40));
     }
+
+    /**
+     * load custom user profiles, this takes the customUserProfile ArrrayList of Strings,
+     * splits the strings on empty spaces and therefore gets the parameters which we need
+     * the Gauge Type, the Gauge Visual Repesentation Type, the X Pos, the Y pos
+     *
+     */
+    public void loadCustomUserProfilesFromAPI(){
+        //convertGaugesToStrings();
+
+
+        //hier String von API reinspeichern in customUserProfile
+
+        for(String s: customUserProfile){
+
+            String GaugeArt = "";
+            String GaugeVisual = "";
+            int XPos = 180;
+            int YPos = 40;
+
+            String[] GaugeObjekt = s.split(" ");
+            System.out.println("GaugeObjekt::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::");
+            System.out.println(Arrays.toString(GaugeObjekt));
+
+            //extract all 4 paramts into variables
+            GaugeArt = GaugeObjekt[0];
+            GaugeVisual = GaugeObjekt[1];
+            XPos = Integer.parseInt(GaugeObjekt[2]);
+            YPos = Integer.parseInt(GaugeObjekt[3]);
+
+            //now add gauge based on params
+            //if you can simplify this code, then youre free to go >D
+            switch (GaugeArt){
+
+                case "Kapazität":
+                    if(GaugeVisual.equals("grafisch")){
+                        gauges.add(new GaugeBlueprint(GaugeMetric.CAPACITY, GaugeType.GRAPHICAL, XPos, YPos));
+                        break;
+                    }
+                    if(GaugeVisual.equals("großeZahl")){
+                        gauges.add(new GaugeBlueprint(GaugeMetric.CAPACITY, GaugeType.BIG_NUMBER, XPos, YPos));
+                        break;
+                    }
+                    if(GaugeVisual.equals("Text")){
+                        gauges.add(new GaugeBlueprint(GaugeMetric.CAPACITY, GaugeType.TEXT_ONLY, XPos, YPos));
+                        break;
+                    }
+
+                case "Spannung":
+                    if(GaugeVisual.equals("grafisch")){
+                        gauges.add(new GaugeBlueprint(GaugeMetric.VOLTAGE, GaugeType.GRAPHICAL, XPos, YPos));
+                        break;
+                    }
+                    if(GaugeVisual.equals("großeZahl")){
+                        gauges.add(new GaugeBlueprint(GaugeMetric.VOLTAGE, GaugeType.BIG_NUMBER, XPos, YPos));
+                        break;
+                    }
+                    if(GaugeVisual.equals("Text")){
+                        gauges.add(new GaugeBlueprint(GaugeMetric.VOLTAGE, GaugeType.TEXT_ONLY, XPos, YPos));
+                        break;
+                    }
+
+                case "Durchschnitt-Geschwindigkeit":
+                    if(GaugeVisual.equals("grafisch")){
+                        gauges.add(new GaugeBlueprint(GaugeMetric.DURCHSCHNITTSGESCHWINDIGKEIT, GaugeType.GRAPHICAL, XPos, YPos));
+                        break;
+                    }
+                    if(GaugeVisual.equals("großeZahl")){
+                        gauges.add(new GaugeBlueprint(GaugeMetric.DURCHSCHNITTSGESCHWINDIGKEIT, GaugeType.BIG_NUMBER, XPos, YPos));
+                        break;
+                    }
+                    if(GaugeVisual.equals("Text")){
+                        gauges.add(new GaugeBlueprint(GaugeMetric.DURCHSCHNITTSGESCHWINDIGKEIT, GaugeType.TEXT_ONLY, XPos, YPos));
+                        break;
+                    }
+
+                case "Geschwindigkeit":
+                    if(GaugeVisual.equals("grafisch")){
+                        gauges.add(new GaugeBlueprint(GaugeMetric.GESCHWINDIGKEIT, GaugeType.GRAPHICAL, XPos, YPos));
+                        break;
+                    }
+                    if(GaugeVisual.equals("großeZahl")){
+                        gauges.add(new GaugeBlueprint(GaugeMetric.GESCHWINDIGKEIT, GaugeType.BIG_NUMBER, XPos, YPos));
+                        break;
+                    }
+                    if(GaugeVisual.equals("Text")){
+                        gauges.add(new GaugeBlueprint(GaugeMetric.GESCHWINDIGKEIT, GaugeType.TEXT_ONLY, XPos, YPos));
+                        break;
+                    }
+
+                case "Leistung":
+                    if(GaugeVisual.equals("grafisch")){
+                        gauges.add(new GaugeBlueprint(GaugeMetric.POWER, GaugeType.GRAPHICAL, XPos, YPos));
+                        break;
+                    }
+                    if(GaugeVisual.equals("großeZahl")){
+                        gauges.add(new GaugeBlueprint(GaugeMetric.POWER, GaugeType.BIG_NUMBER, XPos, YPos));
+                        break;
+                    }
+                    if(GaugeVisual.equals("Text")){
+                        gauges.add(new GaugeBlueprint(GaugeMetric.POWER, GaugeType.TEXT_ONLY, XPos, YPos));
+                        break;
+                    }
+
+                case "DrivingAmperage":
+                    if(GaugeVisual.equals("grafisch")){
+                        gauges.add(new GaugeBlueprint(GaugeMetric.DRIVING_AMP, GaugeType.GRAPHICAL, XPos, YPos));
+                        break;
+                    }
+                    if(GaugeVisual.equals("großeZahl")){
+                        gauges.add(new GaugeBlueprint(GaugeMetric.DRIVING_AMP, GaugeType.BIG_NUMBER, XPos, YPos));
+                        break;
+                    }
+                    if(GaugeVisual.equals("Text")){
+                        gauges.add(new GaugeBlueprint(GaugeMetric.DRIVING_AMP, GaugeType.TEXT_ONLY, XPos, YPos));
+                        break;
+                    }
+
+                case "Tageskilometer":
+
+                    if(GaugeVisual.equals("großeZahl")){
+                        gauges.add(new GaugeBlueprint(GaugeMetric.TAGES_KILOMETER_ZAEHLER, GaugeType.BIG_NUMBER, XPos, YPos));
+                        break;
+                    }
+                    if(GaugeVisual.equals("Text")){
+                        gauges.add(new GaugeBlueprint(GaugeMetric.TAGES_KILOMETER_ZAEHLER, GaugeType.TEXT_ONLY, XPos, YPos));
+                        break;
+                    }
+
+                case "Charger-Temp":
+
+                    if(GaugeVisual.equals("großeZahl")){
+                        gauges.add(new GaugeBlueprint(GaugeMetric.CHARGER_TEMP, GaugeType.BIG_NUMBER, XPos, YPos));
+                        break;
+                    }
+                    if(GaugeVisual.equals("Text")){
+                        gauges.add(new GaugeBlueprint(GaugeMetric.CHARGER_TEMP, GaugeType.TEXT_ONLY, XPos, YPos));
+                        break;
+                    }
+
+                case "Aktueller-Verbrauch":
+
+                        gauges.add(new GaugeBlueprint(GaugeMetric.CONSUMPTION, GaugeType.BIG_NUMBER, XPos, YPos));
+
+                        break;
+                case "Verbrauch":
+                    if(GaugeVisual.equals("grafisch")){
+                        gauges.add(new GaugeBlueprint(GaugeMetric.DURCHSCHNITTSVERBRAUCH, GaugeType.GRAPHICAL, XPos, YPos));
+                        break;
+                    }
+                    if(GaugeVisual.equals("großeZahl")){
+                        gauges.add(new GaugeBlueprint(GaugeMetric.DURCHSCHNITTSVERBRAUCH, GaugeType.BIG_NUMBER, XPos, YPos));
+                        break;
+                    }
+
+
+                case "Reichweite":
+                    if(GaugeVisual.equals("grafisch")){
+                        gauges.add(new GaugeBlueprint(GaugeMetric.RANGE, GaugeType.GRAPHICAL, XPos, YPos));
+                        break;
+                    }
+                    if(GaugeVisual.equals("großeZahl")){
+                        gauges.add(new GaugeBlueprint(GaugeMetric.RANGE, GaugeType.BIG_NUMBER, XPos, YPos));
+                        break;
+                    }
+                    if(GaugeVisual.equals("Text")){
+                        gauges.add(new GaugeBlueprint(GaugeMetric.RANGE, GaugeType.TEXT_ONLY, XPos, YPos));
+                        break;
+                    }
+
+                case "Zellspannungen":
+                    if(GaugeVisual.equals("grafisch")){
+                        gauges.add(new GaugeBlueprint(GaugeMetric.CELL_VOLTAGES, GaugeType.GRAPHICAL, XPos, YPos));
+                        break;
+                    }
+                    if(GaugeVisual.equals("großeZahl")){
+                        gauges.add(new GaugeBlueprint(GaugeMetric.CELL_VOLTAGES, GaugeType.BIG_NUMBER, XPos, YPos));
+                        break;
+                    }
+                    if(GaugeVisual.equals("Text")){
+                        gauges.add(new GaugeBlueprint(GaugeMetric.CELL_VOLTAGES, GaugeType.TEXT_ONLY, XPos, YPos));
+                        break;
+                    }
+
+
+                case "Gefahrene-Kilometer":
+                    if(GaugeVisual.equals("grafisch")){
+                        gauges.add(new GaugeBlueprint(GaugeMetric.ODOMETER, GaugeType.GRAPHICAL, XPos, YPos));
+                        break;
+                    }
+
+
+
+                case "Zelltemperaturen":
+
+                        gauges.add(new GaugeBlueprint(GaugeMetric.POWER, GaugeType.TEXT_ONLY, XPos, YPos));
+                        break;
+            }
+
+
+            }
+
+
+
+        }
+
+
+
+    /**
+     * converts the GaugeBlueprints ArrayList of Objects into a String ArrayList,
+     * in order to send(put) this as a User Parameter in the API
+     * User Profiles are saved in API in Object User in the Parameter UserProfil
+     * Clearing arraylist on each call is necessary in order to have
+     * the most recent gauge state always represented and saved
+     */
+
+    public void convertGaugesToStrings() {
+        customUserProfile.clear();
+        currentBlueprints = getCurrentBlueprints();
+
+        for(GaugeBlueprint b : currentBlueprints){
+            customUserProfile.add(b.toString());
+        }
+        System.out.println("DIE USERPROFILE SIND:/n");
+        System.out.println(customUserProfile);
+    }
+
+
 
     public void loadStatistiken() {
 
@@ -193,9 +416,10 @@ public class GaugeManager {
 
 
 
-        System.out.println(blueprints);
-        System.out.println(activeGauges);
-        System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+        //System.out.println(blueprints);
+       // System.out.println(activeGauges);
+        //System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+
         return blueprints;
 
     }
@@ -220,6 +444,7 @@ public class GaugeManager {
         DashboardConfiguration testConfig1 = new DashboardConfiguration(gauges, "rafek", true);
         //dashboardConfigs.put( "rafek", testConfig1);
         saveConfig(testConfig1);
+
 
 
 
