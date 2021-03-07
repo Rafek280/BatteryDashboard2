@@ -111,14 +111,14 @@ public class GaugeManager {
      *
      * load custom made  confings for testing
      *
-     * oooooooooooooooooooooooooooooooooooooo
+     *
      */
-    public void testLoadConfig() {
+    public void loadCustomConfig() {
 
 
        // activeGauges.clear();
 
-        updateCurrentConfig(getConfig("rafek"));
+        updateCurrentConfig(getConfig("CustomProfil"));
 
     }
 
@@ -146,7 +146,7 @@ public class GaugeManager {
             int YPos = 40;
 
             String[] GaugeObjekt = s.split(" ");
-            System.out.println("GaugeObjekt::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::");
+            System.out.println("GaugeObjekt:");
             System.out.println(Arrays.toString(GaugeObjekt));
 
             //extract all 4 paramts into variables
@@ -368,6 +368,11 @@ public class GaugeManager {
 
     }
 
+    /**
+     * deletes the current active gauges
+     * when loading new custom profile
+     * @param context
+     */
     public void testDelete(Context context){
 
         activeGauges.clear();
@@ -419,7 +424,7 @@ public class GaugeManager {
 
         //System.out.println(blueprints);
        // System.out.println(activeGauges);
-        //System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+
 
         return blueprints;
 
@@ -442,8 +447,8 @@ public class GaugeManager {
         gauges= getCurrentBlueprints();
 
 
-        DashboardConfiguration testConfig1 = new DashboardConfiguration(gauges, "rafek", true);
-        //dashboardConfigs.put( "rafek", testConfig1);
+        DashboardConfiguration testConfig1 = new DashboardConfiguration(gauges, "CustomProfil", true);
+
         saveConfig(testConfig1);
 
 

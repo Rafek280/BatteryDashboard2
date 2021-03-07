@@ -82,11 +82,9 @@ public class StatistiksGaugeManager {
         gauges.add(new GaugeBlueprint(GaugeMetric.TAGES_KILOMETER_ZAEHLER, GaugeType.BIG_NUMBER, 20, 322));
 
         DashboardConfiguration testConfig = new DashboardConfiguration(gauges, "default", true);
-
         currentConfig = saveConfig(testConfig);
 
     }
-
 
     /**oooooooooooooooooooooooooooooooooooooo
      *
@@ -101,9 +99,7 @@ public class StatistiksGaugeManager {
 
     }
 
-    public void loadText(){
 
-    }
 
     /*public void LoadStatistiken() {
 

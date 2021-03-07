@@ -76,7 +76,7 @@ public class UiService extends Service implements PopupMenu.OnMenuItemClickListe
 
     private boolean configWindowVisible = false;
     private GaugeManager gaugeManager;
-    private Gauge gauge;
+  
 
     private BatteryDataService dataService;
     private boolean isDataServiceBound = false;
@@ -221,6 +221,7 @@ public class UiService extends Service implements PopupMenu.OnMenuItemClickListe
         else{
 
         }
+
     }
     /**
      * loads the gauges of the given list to the dashboard, meaning it adds the views to the dashboard frame.
@@ -496,7 +497,7 @@ public class UiService extends Service implements PopupMenu.OnMenuItemClickListe
     }
 
     // The overridden method from the implemented PopupMenu.OnMenuItemClickListener interface to assign functionality to
-    // the close menu's itemswerfgwerge
+    // the close menu's items
 
     public void loadSavedConfig(){
         //gaugeManager.testLoadConfig();
@@ -522,12 +523,12 @@ public class UiService extends Service implements PopupMenu.OnMenuItemClickListe
                 return true;
             case R.id.menu_cancel_stats:
                 popupExitStatistiksMenu.dismiss();
-                //gauge.setStatistik(false);
+
                 return true;
 
             case R.id.menu_load:
                 gaugeManager.testDelete(this);
-                gaugeManager.testLoadConfig();
+                gaugeManager.loadCustomConfig();
                 gaugeManager.instantiateConfigBlueprints(this);
                 gaugeManager.updateUI(this);
                 return true;
@@ -538,12 +539,14 @@ public class UiService extends Service implements PopupMenu.OnMenuItemClickListe
                 return true;
 
             case R.id.menu_statistiken:
-                gaugeManager.convertGaugesToStrings();
+
 
                 if(!statsOn){
                     openStatistiksDashboard();
-                    //gauge.setStatistik(true);
+
                     statsOn = true;
+
+
                 }
                 else{
                     Toast toast = Toast.makeText(this, "Fenster ist bereits offen!", Toast.LENGTH_SHORT);
@@ -552,6 +555,7 @@ public class UiService extends Service implements PopupMenu.OnMenuItemClickListe
                 return true;
 
             case R.id.menu_clear:
+
                 gaugeManager.testDelete(this);
                 return true;
             default:
