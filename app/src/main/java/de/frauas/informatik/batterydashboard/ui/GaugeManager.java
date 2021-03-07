@@ -80,6 +80,7 @@ public class GaugeManager {
         customUserProfile.add("Spannung Text 20 440");
         customUserProfile.add("Charger-Temp großeZahl 170 140");
         // TODO get dashboardConfigs from somewhere. xml?
+
         saveDashConfig();
         // making a default config here...
 

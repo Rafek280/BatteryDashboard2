@@ -43,6 +43,8 @@ public class StatistiksGaugeManager {
     static final String BROADCAST_ACTION = "requestConfigUpdate";
     private static Intent intent = new Intent(BROADCAST_ACTION);
     private boolean IsDeleteMode;
+    private Gauge gauge;
+
 
     // singleton implementation
     private static StatistiksGaugeManager instance;
@@ -53,6 +55,13 @@ public class StatistiksGaugeManager {
         return instance;
     }
 
+    public void draggableBlocker(){
+        for(Gauge g: activeGauges)
+            g.setStatistik(true);
+    }
+
+
+
     public void testPrint(){
         System.out.println("HaLLLWOWOOWOWOWOWOWOWOWOWOW");
     }
@@ -61,8 +70,10 @@ public class StatistiksGaugeManager {
         dashboardConfigs = new Hashtable<>();
         activeGauges = new ArrayList<>();
         // TODO get dashboardConfigs from somewhere. xml?
+
         saveDashConfig();
         // making a default config here...
+
         ArrayList<GaugeBlueprint> gauges = new ArrayList<>();
 
 
@@ -74,10 +85,7 @@ public class StatistiksGaugeManager {
         DashboardConfiguration testConfig = new DashboardConfiguration(gauges, "default", true);
 
         currentConfig = saveConfig(testConfig);
-        //getActiveGauges();
-        //getCurrentBlueprints();
-        //getConfigDescriptions();
-        //getActiveGaugeDescriptions();
+
     }
 
 
@@ -130,6 +138,7 @@ public class StatistiksGaugeManager {
         Gauge g;
         for (GaugeBlueprint b : currentConfig.gauges) {
             g = new Gauge(context, b);
+            g.setStatistik(true);
             activeGauges.add(g);
         }
         return activeGauges;

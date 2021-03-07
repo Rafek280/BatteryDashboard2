@@ -76,6 +76,7 @@ public class UiService extends Service implements PopupMenu.OnMenuItemClickListe
 
     private boolean configWindowVisible = false;
     private GaugeManager gaugeManager;
+    private Gauge gauge;
 
     private BatteryDataService dataService;
     private boolean isDataServiceBound = false;
@@ -521,6 +522,7 @@ public class UiService extends Service implements PopupMenu.OnMenuItemClickListe
                 return true;
             case R.id.menu_cancel_stats:
                 popupExitStatistiksMenu.dismiss();
+                //gauge.setStatistik(false);
                 return true;
 
             case R.id.menu_load:
@@ -537,8 +539,10 @@ public class UiService extends Service implements PopupMenu.OnMenuItemClickListe
 
             case R.id.menu_statistiken:
                 gaugeManager.convertGaugesToStrings();
+
                 if(!statsOn){
                     openStatistiksDashboard();
+                    //gauge.setStatistik(true);
                     statsOn = true;
                 }
                 else{

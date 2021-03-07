@@ -13,6 +13,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.batterydashboard.R;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import de.frauas.informatik.batterydashboard.enums.GaugeMetric;
@@ -57,6 +58,19 @@ public class Gauge extends ConstraintLayout {
     public boolean isHighlighted;
     private float initialBgAlpha = .5f;
     private View deleteIcon;
+    private StatistiksGaugeManager state;
+    private GaugeManager gg;
+    private boolean statistik = false;
+
+    public boolean isStatistik() {
+        return statistik;
+    }
+
+    public void setStatistik(boolean statistik) {
+        this.statistik = statistik;
+    }
+
+
 
     public Gauge(Context context){
         super(context);
@@ -78,8 +92,9 @@ public class Gauge extends ConstraintLayout {
         gaugeType = t;
 
         inflateAndInit(context);
-
-        setDraggable(this);
+    //if (statistik==false) {
+       // setDraggable(this);
+    //}
     }
 
     /**
@@ -95,8 +110,15 @@ public class Gauge extends ConstraintLayout {
         inflateAndInit(context);
 
         // set to blueprint's position
-        setToPosition(blueprint);
-        setDraggable(this);
+
+       // do{
+        if (statistik==false) {
+
+            setDraggable(this);
+
+            setToPosition(blueprint);
+        }
+      //  }while(gg.getActiveGauges());
     }
 
     /**
@@ -175,85 +197,100 @@ public class Gauge extends ConstraintLayout {
     }
 
     void setDraggable(View view){
-        view.setOnTouchListener(new View.OnTouchListener() {
-            @SuppressLint("ClickableViewAccessibility")
-            @Override
 
 
-            public boolean onTouch(View view, MotionEvent event) {
 
-                int width =view.getLayoutParams().width;
-                int height =view.getLayoutParams().height;
-                switch (event.getAction()) {
+            view.setOnTouchListener(new View.OnTouchListener() {
+                @SuppressLint("ClickableViewAccessibility")
+                @Override
 
-                    case MotionEvent.ACTION_MOVE:
-                        lastAction = MotionEvent.ACTION_MOVE;
+                public boolean onTouch(View view, MotionEvent event) {
 
-                        if (width == getMaxWidth() && height ==  getMaxHeight()){}
-                        else {
-                            view.animate()
-                                    .x(event.getRawX() + dX)
-                                    .y(event.getRawY() + dY)
-                                    .setDuration(0)
-                                    .start();
-
-                            if (event.getRawX() + dX < 0) {
-                                view.animate()
-                                        .x(0)
-                                        .setDuration(0)
-                                        .start();
-                            }
-                            if (event.getRawX() + dX > 195) {
-                                view.animate()
-                                        .x(195)
-                                        .setDuration(0)
-                                        .start();
-                            }
-                            if (event.getRawY() + dY + height > getMaxHeight()) {
-                                view.animate()
-                                        .y(getMinHeight() - height)
-                                        .setDuration(0)
-                                        .start();
-                            }
-                            if (event.getRawY() + dY < 0) {
-                                view.animate()
-                                        .y(0)
-                                        .setDuration(0)
-                                        .start();
-                            }
-                            if (event.getRawY() + dY > 460) {
-                                view.animate()
-                                        .y(460)
-                                        .setDuration(0)
-                                        .start();
-                            }
-
-
+                    int width = view.getLayoutParams().width;
+                    int height = view.getLayoutParams().height;
+                    if(isStatistik() == true) {
+                        try {
+                            state.draggableBlocker();
                         }
-                        break;
-
-                    case MotionEvent.ACTION_DOWN:
-                        lastAction = MotionEvent.ACTION_DOWN;
-                        activateHighlight();
-                        view.bringToFront();
-                        dX = view.getX() - event.getRawX();
-                        dY = view.getY() - event.getRawY();
-                        break;
-
-                    case MotionEvent.ACTION_UP:
-                        if (lastAction == MotionEvent.ACTION_MOVE) {
-                            // on-click action:
-                            toggleHighlight();
+                        catch (Exception exception){
+                            System.out.println("Stastik Gaugen sind nicht dragable");
                         }
-                        deactivateHighlight();
-                        break;
+                    }else
+                    switch (event.getAction()) {
 
-                    default:
-                        return false;
+
+                            case MotionEvent.ACTION_MOVE:
+                                lastAction = MotionEvent.ACTION_MOVE;
+
+
+                                if (width == getMaxWidth() && height == getMaxHeight()) {
+                                } else {
+                                    view.animate()
+                                            .x(event.getRawX() + dX)
+                                            .y(event.getRawY() + dY)
+                                            .setDuration(0)
+                                            .start();
+
+                                    if (event.getRawX() + dX < 0) {
+                                        view.animate()
+                                                .x(0)
+                                                .setDuration(0)
+                                                .start();
+                                    }
+                                    if (event.getRawX() + dX > 195) {
+                                        view.animate()
+                                                .x(195)
+                                                .setDuration(0)
+                                                .start();
+                                    }
+                                    if (event.getRawY() + dY + height > getMaxHeight()) {
+                                        view.animate()
+                                                .y(getMinHeight() - height)
+                                                .setDuration(0)
+                                                .start();
+                                    }
+                                    if (event.getRawY() + dY < 0) {
+                                        view.animate()
+                                                .y(0)
+                                                .setDuration(0)
+                                                .start();
+                                    }
+                                    if (event.getRawY() + dY > 460) {
+                                        view.animate()
+                                                .y(460)
+                                                .setDuration(0)
+                                                .start();
+                                    }
+
+                                }
+
+                                break;
+
+
+                        case MotionEvent.ACTION_DOWN:
+                            lastAction = MotionEvent.ACTION_DOWN;
+                            activateHighlight();
+                            view.bringToFront();
+                            dX = view.getX() - event.getRawX();
+                            dY = view.getY() - event.getRawY();
+                            break;
+
+                        case MotionEvent.ACTION_UP:
+                            if (lastAction == MotionEvent.ACTION_MOVE) {
+                                // on-click action:
+                                toggleHighlight();
+                            }
+                            deactivateHighlight();
+                            break;
+
+                        default:
+                            return false;
+                    }
+                    return true;
                 }
-                return true;
-            }
-        });
+
+            });
+
     }
 
     void activateHighlight(){
