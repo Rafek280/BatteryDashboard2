@@ -44,7 +44,7 @@ public class StatistiksGaugeManager {
     private static Intent intent = new Intent(BROADCAST_ACTION);
     private boolean IsDeleteMode;
     private Gauge gauge;
-
+    private int i=0;
 
     // singleton implementation
     private static StatistiksGaugeManager instance;
