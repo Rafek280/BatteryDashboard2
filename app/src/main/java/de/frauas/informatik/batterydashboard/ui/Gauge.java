@@ -208,6 +208,11 @@ public class Gauge extends ConstraintLayout {
 
                     int width = view.getLayoutParams().width;
                     int height = view.getLayoutParams().height;
+                    /**
+                     * checks wether gauge is in stasitiks on normal dashboard
+                     * disabling touch events for stat gauges as those need to be unchangeable
+                     * presets
+                     */
                     if(isStatistik() == true) {
                         try {
                             state.draggableBlocker();

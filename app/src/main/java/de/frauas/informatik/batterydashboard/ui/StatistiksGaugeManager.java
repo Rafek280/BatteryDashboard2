@@ -77,10 +77,9 @@ public class StatistiksGaugeManager {
         ArrayList<GaugeBlueprint> gauges = new ArrayList<>();
 
 
-
         gauges.add(new GaugeBlueprint(GaugeMetric.DURCHSCHNITTSVERBRAUCH, GaugeType.GRAPHICAL, 20, 32));
-        gauges.add(new GaugeBlueprint(GaugeMetric.TAGES_KILOMETER_ZAEHLER, GaugeType.GRAPHICAL, 20, 322));
-        gauges.add(new GaugeBlueprint(GaugeMetric.VOLTAGE, GaugeType.GRAPHICAL, 20, 172));
+        gauges.add(new GaugeBlueprint(GaugeMetric.DURCHSCHNITTSGESCHWINDIGKEIT, GaugeType.GRAPHICAL, 20, 175));
+        gauges.add(new GaugeBlueprint(GaugeMetric.TAGES_KILOMETER_ZAEHLER, GaugeType.BIG_NUMBER, 20, 322));
 
         DashboardConfiguration testConfig = new DashboardConfiguration(gauges, "default", true);
 

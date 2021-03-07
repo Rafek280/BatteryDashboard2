@@ -14,7 +14,7 @@ public enum GaugeMetric {
     GESCHWINDIGKEIT ("Geschwindigkeit","KM/H", 0, 400),
     POWER("Leistung","kW", -10, 30),
     DRIVING_AMP("DrivingAmperage","A", -50,150),
-    TAGES_KILOMETER_ZAEHLER("Tageskilometer","A", -50,150),
+    TAGES_KILOMETER_ZAEHLER("Strecke","KM", -50,150),
     CHARGER_TEMP("Charger-Temp","°C"),
     CONSUMPTION("Aktueller-Verbrauch","unit"),
     DURCHSCHNITTSVERBRAUCH("Verbrauch","kWh"),

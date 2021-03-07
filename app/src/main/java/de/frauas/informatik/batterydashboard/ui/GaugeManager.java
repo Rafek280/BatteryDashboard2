@@ -73,12 +73,12 @@ public class GaugeManager {
         customUserProfile = new ArrayList<String>();
         customUserProfile.add("Kapazität grafisch 180 40");
         customUserProfile.add("Leistung grafisch 20 20");
-        customUserProfile.add("Spanung grafisch 20 160");
+        customUserProfile.add("Spannung grafisch 20 160");
         customUserProfile.add("DrivingAmperage großeZahl 180 300");
         customUserProfile.add("Zellspannungen Text 20 300");
-        customUserProfile.add("Zelltemperaturen Text 170 300");
+        customUserProfile.add("Zelltemperaturen Text 180 440");
         customUserProfile.add("Spannung Text 20 440");
-        customUserProfile.add("Charger-Temp großeZahl 170 140");
+        customUserProfile.add("Charger-Temp großeZahl 180 160");
         // TODO get dashboardConfigs from somewhere. xml?
 
         saveDashConfig();
