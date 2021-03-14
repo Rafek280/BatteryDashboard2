@@ -15,24 +15,9 @@ import com.example.batterydashboard.R;
 /**
  * SAME FUNCTIONALITY AS DASHBOARD, displays second frame for statistics
  *
- * This class is the parent view of the dashboard frame, which is an AbsoluteLayout (as long as
- * it's possible to use this deprecated class, that fits our requirements with draggable views best ;) )
- * A dashboard object belongs to the UiService class and is used to retrieve the dashboard frame
- * to then manipulate its child views.
- * This class implements Overlay interface. See responsibilities to learn why ;)
- * Only UiService should be able to manipulate dashboard. To e.g. trigger UI updates from other classes
- * request an update by broadcasting, as implemented in DashboardManager:
- * @see GaugeManager
- * or learn how to do that here: https://www.websmithing.com/2011/02/01/how-to-update-the-ui-in-an-android-activity-using-data-from-a-background-service/
+ * Functions the same as the normal dashboard.
  *
- * Responsibilities:
- * - inflate dashboard layout (with background image, buttons etc.)
- * - get elements from the content – This is what you would do by *findViewById* if you had an Activity. It's way more
- *   complicated with this service architecture. Why we still need to do it this way is explained in the UiService class:
- *   @see UiService
- *   @see IOverlay for HOW TO FIND VIEWS BY ID!! ;)
- *
- * @author Julia
+ * More Detail on the functionality of this class are found in Dashboard.java
  */
 
 public class StatistikDashboard extends ConstraintLayout implements IOverlay {

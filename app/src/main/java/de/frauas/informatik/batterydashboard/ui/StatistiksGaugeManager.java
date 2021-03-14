@@ -14,24 +14,16 @@ import de.frauas.informatik.batterydashboard.enums.GaugeType;
 /**
  * This is a Singleton. The only instance belongs to the running UiService.
  *
- * Responsibilities:
- * - manages dashboard configurations (= set of gaugeBlueprints for the gauges to be displayed, each with their positions, metric and type)</br>
- * - manages active Gauges (visible in UI)</br>
- * - instantiate a config (making gauges from blueprints) to be then displayed by the uiService</br>
- * - save a changed config</br>
- * - add a gauge (chosen from configuration window) to the current config</br>
- * - update the current config when a new gauge is added</br>
- * - save the current positions of all displayed gauges to the current config</br>
- * - request a UI update from the UiService when a new gauge was added. This is done by sending a broadcast,
- *   that the UiService has subscribed to. (learn how to do that
- *   <a href="https://www.websmithing.com/2011/02/01/how-to-update-the-ui-in-an-android-activity-using-data-from-a-background-service/">here (Tutorial)</a>)
+ * Functions the same as normal gauge manager. statistik profile is universal and not changeable by the user itself.
+ *
+ * 
  *.
  * @see UiService
  * @see GaugeBlueprint
  * @see Gauge
  * @see Dashboard
  *
- * @author filzinge@stud.fra-uas.de
+ *
  */
 
 public class StatistiksGaugeManager {
