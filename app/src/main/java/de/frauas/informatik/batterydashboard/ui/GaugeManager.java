@@ -112,7 +112,7 @@ public class GaugeManager {
 
         /**oooooooooooooooooooooooooooooooooooooo
      *
-     * load custom made  local config, which represents the only custom local profile
+     * load custom made  local config, which represents at the moment the only custom local profile
      *
      *
      */
