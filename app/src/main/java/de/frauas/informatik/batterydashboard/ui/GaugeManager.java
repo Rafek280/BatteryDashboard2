@@ -70,6 +70,9 @@ public class GaugeManager {
         dashboardConfigs = new Hashtable<>();
         activeGauges = new ArrayList<>();
 
+        /**
+         * neue methode gauges zu laden mittels string uebergabe und der neuen Funktion loadCustomUserProfFromApi
+         */
         customUserProfile = new ArrayList<String>();
         customUserProfile.add("Kapazität grafisch 180 40");
         customUserProfile.add("Leistung grafisch 20 20");
@@ -85,7 +88,7 @@ public class GaugeManager {
         // making a default config here...
 
 
-        //LOAD CUSTOM PROFILES
+        //LOAD CUSTOM PROFILES(old version)
         loadCustomUserProfilesFromAPI();
         /*gauges.add(new GaugeBlueprint(GaugeMetric.POWER, GaugeType.GRAPHICAL, 20, 20));
         gauges.add(new GaugeBlueprint(GaugeMetric.CAPACITY, GaugeType.GRAPHICAL, 180, 40));
@@ -109,7 +112,7 @@ public class GaugeManager {
 
         /**oooooooooooooooooooooooooooooooooooooo
      *
-     * load custom made  confings for testing
+     * load custom made  local config, which represents the only custom local profile
      *
      *
      */
@@ -129,7 +132,10 @@ public class GaugeManager {
     /**
      * load custom user profiles, this takes the customUserProfile ArrrayList of Strings,
      * splits the strings on empty spaces and therefore gets the parameters which we need
-     * the Gauge Type, the Gauge Visual Repesentation Type, the X Pos, the Y pos
+     * the Gauge Type, the Gauge Visual Repesentation Type, the X Pos, the Y pos. After that
+     * it creates a corresponding Gauge Blueprint Object and puts it into activeGauges
+     *
+     * If adding new gauge types please add the corresponding code in the switch statement
      *
      */
     public void loadCustomUserProfilesFromAPI(){

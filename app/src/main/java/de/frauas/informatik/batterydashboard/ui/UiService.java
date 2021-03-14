@@ -225,6 +225,7 @@ public class UiService extends Service implements PopupMenu.OnMenuItemClickListe
     }
     /**
      * loads the gauges of the given list to the dashboard, meaning it adds the views to the dashboard frame.
+     * happens with the normal dashboard, aswell with the newly statistik dashboard
      * @param gauges list of Gauge objects
      */
     private void loadDashboardConfig(ArrayList<Gauge> gauges){
@@ -335,7 +336,7 @@ public class UiService extends Service implements PopupMenu.OnMenuItemClickListe
                 }
                 break;
             case CONSUMPTION:
-                /* TODO implement in battery: Durchschnittsverbrauch
+                /*
                  (aus der Leistung berechnet, seit Fahrzeugstart (Zündung an),
                  Werte jede Sekunde aufaddieren, dann durch Zeit teilen) */
                 gauge.update(battery.voltageSum());
@@ -356,6 +357,7 @@ public class UiService extends Service implements PopupMenu.OnMenuItemClickListe
                 break;
             case ODOMETER:
                 // TODO implement in battery: (Tages-)kilometerzähler (seit Zündung an)
+                //wurde implentiert, zundung check noch nicht
                 break;
             case CAPACITY:
                 gauge.update(battery.capacity());
@@ -382,8 +384,8 @@ public class UiService extends Service implements PopupMenu.OnMenuItemClickListe
     }
 
     /**
-     * statistiks button for closing the optional statstistiks dashboard
-     * @param btn
+     * statistik button for closing the optional statstistiks dashboard
+     * @param btn represents the button in the exit menu
      */
     private void setStatstiksMenu(Button btn) {
         btn.setOnClickListener((l) -> {
